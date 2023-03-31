@@ -1,0 +1,55 @@
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          description: The user Key id, Auto increase
+        id:
+          type: string
+          description: The user ID.
+        name:
+          type: string
+          description: The user's name.
+        email:
+          type: string
+          description: The user's email.
+        password:
+          type: string
+          description: The user's password.
+        OAuth:
+          type: object
+          description: The users OAuth information.
+          properties:
+            provider:
+              type: string
+              description: The user's OAuth sns type.
+        token:
+          type: string
+          description: The user's local/OAuth provide token.
+        enabled:
+          type: boolean
+          description: check user has banned or not
+        role:
+          type: array
+          description: The user's roles for authorization.
+          items:
+            type: integer
+          example:
+            - 2001
+            - 5150
+        createdAt:
+          type: date
+          description: The date that user regist service.
+      example:
+        user_id: 1
+        id: 123456789
+        name: John Doe
+        email: john@doe.com
+        password: hasedPassword
+        OAuth: { provider: kakao }
+        token: provide_access_token
+        enable: false
+        role: [2001, 5150]
+        createdAt: 2023-03-31 23:31:43

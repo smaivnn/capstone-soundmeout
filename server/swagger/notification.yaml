@@ -1,0 +1,14 @@
+components:
+  schemas:
+    Notification:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The user ID.
+        name:
+          type: string
+          description: The user's name.
+      example:
+        id: 123456789
+        name: John Doe

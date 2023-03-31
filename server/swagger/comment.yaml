@@ -1,0 +1,37 @@
+components:
+  schemas:
+    Comment:
+      type: object
+      properties:
+        comment_id:
+          type: integer
+          description: The comment Key id, Auto increase
+        text:
+          type: string
+          description: The title of comment.
+        author:
+          type: object
+          description: The author of comment.
+          properties:
+            name:
+              type: string
+              description: The written user name of comment.
+            id:
+              type: string
+              description: The written user id of comment.
+        createdAt:
+          type: date
+          description: The date that user create comment.
+        updatedAt:
+          type: date
+          description: The date that user update comment.
+        visible:
+          type: boolean
+          description: comment visible condition
+      example:
+        paper_id: 1
+        text: text of comment
+        author: { name: john, id: doe123 }
+        visible: true
+        createdAt: 2023-03-31 23:31:43
+        updatedAt: 2023-04-01 23:31:43
