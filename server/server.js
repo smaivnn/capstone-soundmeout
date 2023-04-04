@@ -31,6 +31,6 @@ app.use(cookieParser());
 app.use(morganMiddleware);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use("/test", require("./routes/test"));
+app.use("/auth", require("./routes/auth"));
 
 app.listen(PORT, () => logger.info(`Server running on port ${PORT}`));

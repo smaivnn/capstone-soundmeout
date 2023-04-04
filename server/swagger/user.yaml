@@ -40,7 +40,8 @@ components:
             - 2001
             - 5150
         createdAt:
-          type: date
+          type: string
+          format: date-time
           description: The date that user regist service.
       example:
         user_id: 1
