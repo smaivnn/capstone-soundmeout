@@ -1,0 +1,21 @@
+components:
+  schemas:
+    Follow:
+      type: object
+      properties:
+        follow_id:
+          type: integer
+          description: The follow Key id, Auto increase
+        follower_id:
+          type: intger
+          description: The user who follow
+        following_id:
+          type: integer
+          description: The user who is followed
+        createdAt:
+          type: date
+          description: The date that user create follow association.
+      example:
+        follow_id: 1
+        follower_id: 12
+        following_id: 123
