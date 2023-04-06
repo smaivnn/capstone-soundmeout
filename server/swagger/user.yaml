@@ -54,3 +54,4 @@ components:
         enable: false
         role: [2001, 5150]
         createdAt: 2023-03-31 23:31:43
+# role이 뭐야?

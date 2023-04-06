@@ -166,7 +166,7 @@ router.get(`/${topic_id}`);
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.put(`/update/${topic_id}`);
+router.patch(`/update/${topic_id}`);
 
 /**
  * @swagger

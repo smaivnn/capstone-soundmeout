@@ -51,7 +51,7 @@ const swaggerOptions = {
         description: "API for Follow in the system",
       },
       {
-        name: "Notification",
+        name: "Noti",
         description: "API for Notification in the system",
       },
     ],
