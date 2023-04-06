@@ -51,7 +51,7 @@ const signupController = require("../controllers/auth/signupController");
  *               $ref: '#/components/schemas/responseFailed'
  *
  */
-router.post("/signup", signupController.handleSignup);
+router.post("/signup",signupController.handleSignup);
 
 /**
  * @swagger
