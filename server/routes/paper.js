@@ -136,8 +136,8 @@ router.patch(`/delete/${paper_id}`);
 /**
  * @swagger
  * /paper/update/{paper_id}:
- *   patch:
- *     summary: 페이퍼 수정
+ *   put:
+ *     summary: 페이퍼에 코멘트 달기
  *     description: header로 access_token, path파라미터로 topic_id, body로 comment, public를 받아서 페이퍼 수정한다.
  *     tags:
  *       - Paper
@@ -155,7 +155,7 @@ router.patch(`/delete/${paper_id}`);
  *         schema:
  *           type: integer
  *     requestBody:
- *        description: commnet와 pulic여부를 body에 넣어주세요.
+ *        description: comment와 pulic여부를 body에 넣어주세요.
  *        required: true
  *        content:
  *          application/json:
@@ -212,6 +212,6 @@ router.patch(`/delete/${paper_id}`);
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.patch(`/update/${paper_id}`);
+router.put(`/update/${paper_id}`);
 
 module.exports = router;

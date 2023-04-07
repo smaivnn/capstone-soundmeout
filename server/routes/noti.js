@@ -6,7 +6,7 @@ const router = express.Router();
  * /noti/create:
  *   post:
  *     summary: 알람 생성
- *     description: header에 token, body에 type,message을 보내어 새로운 토픽을 작성한다.
+ *     description: header에 token, body에 reciever_id, type, redirectUrl를 보내어 새로운 알림을 생성한다.
  *     tags:
  *       - Noti
  *     parameters:
@@ -17,22 +17,24 @@ const router = express.Router();
  *         schema:
  *           type: string
  *     requestBody:
- *        description: type과 message를 body에 넣어주세요.
+ *        description: comment와 pulic여부를 body에 넣어주세요.
  *        required: true
  *        content:
  *          application/json:
  *            schema:
  *             type: object
  *             properties:
+ *               reciever_id:
+ *                 type: integer
+ *                 example: 1
  *               type:
- *                 type: string
- *                 example: "comment"
- *               message:
- *                 type: string
- *                 example: "감자합니다."
+ *                type: string
+ *                example: 'paper'
+ *               redirectUrl:
+ *                type: string
+ *                example: 'http://www.naver.com'
  *             required:
- *               - type
- *               - message
+ *               - reciever_id, type, redirectUrl
  *     responses:
  *       204:
  *         description: Ok
@@ -101,4 +103,39 @@ router.post("/create");
  */
 router.get(`/${user_id}`);
 
-router.patch(``);
+/**
+ * @swagger
+ * /noti/read/{noti_id}:
+ *   patch:
+ *     summary: 알림 읽음 처리
+ *     description: header에 token ,paht파라미터에 noti_id 통해 알림을 읽음 처리한다.
+ *     tags:
+ *       - Noti
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         description: Access token
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: path
+ *         name: noti_id
+ *         description: noti_id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       204:
+ *         description: Ok
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/responseSuccess'
+ *       400:
+ *         description: Created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/responseFailed'
+ */
+router.patch(`/read/${noti_id}`);
