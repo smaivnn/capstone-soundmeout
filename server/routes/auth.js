@@ -5,6 +5,8 @@ const signupController = require("../controllers/auth/signupController");
 const loginController = require("../controllers/auth/loginController");
 const verifyJwtToken = require("../utils/middleware/verifyJwtToken");
 const accountController = require("../controllers/auth/accountController");
+const mailController = require("../controllers/auth/mailController");
+
 /**
  * @swagger
  * /auth/signup:
@@ -125,18 +127,18 @@ router.post("/login", loginController.handleLogin);
  *         schema:
  *           type: string
  *     requestBody:
- *        description: user_id를 body에넣어주세요
+ *        description: login_id를 body에넣어주세요
  *        required: true
  *        content:
  *          application/json:
  *            schema:
  *             type: object
  *             properties:
- *               user_id:
+ *               login_id:
  *                 type: integer
  *                 example: 1234
  *             required:
- *               - user_id
+ *               - login_id
  *     responses:
  *       204:
  *         description: No Content
@@ -168,7 +170,7 @@ router.post(
  * /auth/update-password:
  *   post:
  *     summary: 비밀번호 변경
- *     description: header로 access_token과 body로 user_id, old_password, new_password를 받아 검증 후 비밀번호를 변경한다.
+ *     description: header로 access_token과 body로 login_id, old_password, new_password를 받아 검증 후 비밀번호를 변경한다.
  *     tags:
  *       - Auth
  *     parameters:
@@ -179,14 +181,14 @@ router.post(
  *         schema:
  *           type: string
  *     requestBody:
- *        description: user_id, old_password, new_password를 넣어주세요.
+ *        description: login_id, old_password, new_password를 넣어주세요.
  *        required: true
  *        content:
  *          application/json:
  *            schema:
  *             type: object
  *             properties:
- *               user_id:
+ *               login_id:
  *                 type: integer
  *                 example: 1231
  *               old_password:
@@ -196,7 +198,7 @@ router.post(
  *                 type: string
  *                 example: asdf1234
  *             required:
- *               - user_id
+ *               - login_id
  *               - old_password
  *               - new_password
  *     responses:
@@ -231,6 +233,57 @@ router.post(
   accountController.handleUpdatePassword
 );
 
-router.post("/find-password", loginController.handleFindPassword);
+/**
+ * @swagger
+ * /auth/find-password:
+ *   post:
+ *     summary: 비밀번호 찾기
+ *     description: body로 name,email 를 받아서 해당 유저의 이메일로 비밀번호 변경 링크를 보낸다.
+ *     tags:
+ *       - Auth
+ *     requestBody:
+ *        description: name, email를 넣어주세요.
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: qwer1234
+ *               email:
+ *                 type: string
+ *                 example: asdf1234
+ *             required:
+ *               - name
+ *               - email
+ *     responses:
+ *       204:
+ *         description: No Content
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/responseSuccess'
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/responseFailed'
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/responseFailed'
+ *       403:
+ *         description: Forbidden
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/responseFailed'
+ */
+router.post("/find-password", mailController.handlePasswordMail);
 
 module.exports = router;
