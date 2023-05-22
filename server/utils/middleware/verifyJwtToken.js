@@ -13,7 +13,6 @@ const verifyToken = async (req, res, next) => {
     if (error.name === "TokenExpiredError") {
       // 리프레시 토큰 가져오기
       const refreshToken = req.cookies.refreshToken;
-
       // 리프레시 토큰이 없는 경우
       if (!refreshToken) {
         return res
@@ -33,7 +32,7 @@ const verifyToken = async (req, res, next) => {
           { _id: decodedRefreshToken._id },
           process.env.ACCESS_TOKEN_SECRET,
           {
-            expiresIn: "1h",
+            expiresIn: "10s",
             issuer: "soundmeout",
           }
         );

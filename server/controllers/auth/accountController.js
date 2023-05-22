@@ -14,7 +14,7 @@ const handleDeleteAccount = async (req, res, next) => {
     });
   }
   try {
-    const findUser = await User.findOne({ _id: req._id });
+    const findUser = await User.findOne({ _id: req.user._id });
     if (!findUser) {
       return res.status(404).json({
         success: false,
@@ -24,7 +24,6 @@ const handleDeleteAccount = async (req, res, next) => {
         message: "User not found.",
       });
     }
-    console.log(password, findUser.password);
 
     // check password
     const match = await bcrypt.compare(password, findUser.password);
@@ -67,7 +66,7 @@ const handleUpdatePassword = async (req, res, next) => {
     });
   }
   try {
-    const findUser = await User.findOne({ _id: req._id });
+    const findUser = await User.findOne({ _id: req.user._id });
     if (!findUser) {
       return res.status(404).json({
         success: false,

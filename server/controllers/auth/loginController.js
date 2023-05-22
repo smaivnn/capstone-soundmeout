@@ -17,43 +17,44 @@ const handleLogin = async (req, res, next) => {
   }
 
   try {
-    const user = await User.findOne({ loginId: id });
-    if (!user) {
+    const findUser = await User.findOne({ loginId: id });
+    if (!findUser) {
       return res.status(400).json({
         loginSuccess: false,
         message: "해당하는 유저가 없습니다.",
       });
     }
-    console.log(password, user.password);
-    match = await bcrypt.compare(password, user.password);
+    match = await bcrypt.compare(password, findUser.password);
     if (match) {
       // generate accessToken
       const accessToken = jwt.sign(
-        { _id: user._id },
+        { _id: findUser._id },
         process.env.ACCESS_TOKEN_SECRET,
         {
-          expiresIn: "1h",
+          expiresIn: "10s",
         }
       );
 
       //generate refreshToken
       const refreshToken = jwt.sign(
-        { _id: user.id },
+        { _id: findUser.id },
         process.env.REFRESH_TOKEN_SECRET,
         {
           expiresIn: "14d",
         }
       );
-      user.refreshToken = refreshToken;
-      const result = await user.save();
+      findUser.refreshToken = refreshToken;
+      const result = await findUser.save();
 
-      res.cookie("jwt", refreshToken, {
-        httpOnly: true,
-        sameSite: "None",
+      res.cookie("refreshToken", refreshToken, {
         maxAge: 14 * 24 * 60 * 60 * 1000, // 14일
-        secure: true,
       });
-
+      // res.cookie("refreshToken", refreshToken, {
+      //   httpOnly: true,
+      //   sameSite: "None",
+      //   maxAge: 14 * 24 * 60 * 60 * 1000, // 14일
+      //   secure: true,
+      // });
       res.status(201).json({ success: true, accessToken });
     } else {
       return res.status(400).json({
