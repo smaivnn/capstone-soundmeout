@@ -1,7 +1,7 @@
 const User = require("../../model/User");
 const bcrypt = require("bcrypt");
 
-const handleSignup = async (req, res) => {
+const handleSignup = async (req, res, next) => {
   const { id, name, email, password } = req.body;
   console.log(id, name, email, password);
   if (!id || !name || !email || !password) {
@@ -27,8 +27,9 @@ const handleSignup = async (req, res) => {
       status: 201,
       message: `user signup successful`,
     });
+    next();
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       status: 500,
       source: "signupController/handleSignup",

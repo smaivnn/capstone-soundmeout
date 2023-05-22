@@ -27,6 +27,10 @@ const userSchema = new Schema(
       User: Number,
       Admin: Number,
     },
+    enabled: {
+      type: Boolean,
+      default: true,
+    },
     refreshToken: { type: String, required: false },
   },
   {

@@ -4,7 +4,7 @@ const router = express.Router();
 const signupController = require("../controllers/auth/signupController");
 const loginController = require("../controllers/auth/loginController");
 const verifyJwtToken = require("../utils/middleware/verifyJwtToken");
-
+const accountController = require("../controllers/auth/accountController");
 /**
  * @swagger
  * /auth/signup:
@@ -53,9 +53,7 @@ const verifyJwtToken = require("../utils/middleware/verifyJwtToken");
  *               $ref: '#/components/schemas/responseFailed'
  *
  */
-router.post("/signup", signupController.handleSignup, async (req, res) => {
-  console.log("signup");
-});
+router.post("/signup", signupController.handleSignup);
 
 /**
  * @swagger
@@ -116,7 +114,7 @@ router.post("/login", loginController.handleLogin);
  * /auth/leave:
  *   post:
  *     summary: 계정 탈퇴
- *     description: header로 access_token과 body로 user_id를 받아 검증 후 계정 탈퇴를 진행한다.
+ *     description: header로 access_token과 body로 _id를 받아 검증 후 계정 탈퇴를 진행한다.
  *     tags:
  *       - Auth
  *     parameters:
@@ -159,9 +157,11 @@ router.post("/login", loginController.handleLogin);
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.post(`/leave`, verifyJwtToken.verifyToken, async (req, res) => {
-  console.log(req._id);
-});
+router.post(
+  `/leave`,
+  verifyJwtToken.verifyToken,
+  accountController.handleDeleteAccount
+);
 
 /**
  * @swagger
@@ -225,6 +225,12 @@ router.post(`/leave`, verifyJwtToken.verifyToken, async (req, res) => {
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.post(`/update-password`);
+router.post(
+  `/update-password`,
+  verifyJwtToken.verifyToken,
+  accountController.handleUpdatePassword
+);
+
+router.post("/find-password", loginController.handleFindPassword);
 
 module.exports = router;

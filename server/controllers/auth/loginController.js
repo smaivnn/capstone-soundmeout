@@ -24,6 +24,7 @@ const handleLogin = async (req, res, next) => {
         message: "해당하는 유저가 없습니다.",
       });
     }
+    console.log(password, user.password);
     match = await bcrypt.compare(password, user.password);
     if (match) {
       // generate accessToken
@@ -73,4 +74,6 @@ const handleLogin = async (req, res, next) => {
   }
 };
 
-module.exports = { handleLogin };
+const handleFindPassword = async (req, res, next) => {};
+
+module.exports = { handleLogin, handleFindPassword };
