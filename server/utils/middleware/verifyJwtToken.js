@@ -51,11 +51,10 @@ const verifyToken = async (req, res, next) => {
 
         findUser.refreshToken = newRefreshToken;
         await findUser.save();
-
         res.cookie("refreshToken", newRefreshToken, {
           maxAge: 14 * 24 * 60 * 60 * 1000, // 14일
         });
-        req._id = decoded._id;
+        req._id = decodedRefreshToken._id;
         next();
       } catch (refreshTokenError) {
         return res

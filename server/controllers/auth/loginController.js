@@ -21,7 +21,7 @@ const handleLogin = async (req, res, next) => {
     if (!findUser) {
       return res.status(400).json({
         loginSuccess: false,
-        message: "해당하는 유저가 없습니다.",
+        message: "User not found.",
       });
     }
     match = await bcrypt.compare(password, findUser.password);
@@ -32,6 +32,7 @@ const handleLogin = async (req, res, next) => {
         process.env.ACCESS_TOKEN_SECRET,
         {
           expiresIn: "1h",
+          issuer: "soundmeout",
         }
       );
 
@@ -41,6 +42,7 @@ const handleLogin = async (req, res, next) => {
         process.env.REFRESH_TOKEN_SECRET,
         {
           expiresIn: "14d",
+          issuer: "soundmeout",
         }
       );
       findUser.refreshToken = refreshToken;
@@ -58,8 +60,8 @@ const handleLogin = async (req, res, next) => {
       res.status(201).json({ success: true, accessToken });
     } else {
       return res.status(400).json({
-        loginSuccess: false,
-        message: "비밀번호가 틀렸습니다.",
+        succes: false,
+        message: "wrong password",
       });
     }
     next();
