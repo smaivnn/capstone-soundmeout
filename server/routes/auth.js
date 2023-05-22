@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 
 const signupController = require("../controllers/auth/signupController");
+const loginController = require("../controllers/auth/loginController");
+const verifyJwtToken = require("../utils/middleware/verifyJwtToken");
 
 /**
  * @swagger
@@ -51,7 +53,9 @@ const signupController = require("../controllers/auth/signupController");
  *               $ref: '#/components/schemas/responseFailed'
  *
  */
-router.post("/signup",signupController.handleSignup);
+router.post("/signup", signupController.handleSignup, async (req, res) => {
+  console.log("signup");
+});
 
 /**
  * @swagger
@@ -105,7 +109,7 @@ router.post("/signup",signupController.handleSignup);
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.post("/login");
+router.post("/login", loginController.handleLogin);
 
 /**
  * @swagger
@@ -155,7 +159,9 @@ router.post("/login");
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.post(`/leave`);
+router.post(`/leave`, verifyJwtToken.verifyToken, async (req, res) => {
+  console.log(req._id);
+});
 
 /**
  * @swagger

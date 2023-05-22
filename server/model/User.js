@@ -7,7 +7,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    userId: {
+    loginId: {
       type: String,
       required: true,
     },
@@ -15,13 +15,9 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    company: {
-      type: String,
-      required: true,
-    },
     email: {
       type: String,
-      requireed: true,
+      required: true,
     },
     roles: {
       Guest: {
@@ -31,7 +27,7 @@ const userSchema = new Schema(
       User: Number,
       Admin: Number,
     },
-    refreshToken: String,
+    refreshToken: { type: String, required: false },
   },
   {
     timestamps: true,
