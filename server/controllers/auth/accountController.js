@@ -14,7 +14,7 @@ const handleDeleteAccount = async (req, res, next) => {
     });
   }
   try {
-    const findUser = await User.findOne({ _id: req.user._id });
+    const findUser = await User.findOne({ _id: req._id });
     if (!findUser) {
       return res.status(404).json({
         success: false,
@@ -66,7 +66,7 @@ const handleUpdatePassword = async (req, res, next) => {
     });
   }
   try {
-    const findUser = await User.findOne({ _id: req.user._id });
+    const findUser = await User.findOne({ _id: req._id });
     if (!findUser) {
       return res.status(404).json({
         success: false,

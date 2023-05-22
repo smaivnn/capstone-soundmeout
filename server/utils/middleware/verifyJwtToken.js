@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const User = require("../../model/User");
 
 const verifyToken = async (req, res, next) => {
   const authHeader = req.headers.authorization || req.headers.Authorization;
@@ -9,11 +10,10 @@ const verifyToken = async (req, res, next) => {
     req._id = decoded._id;
     next();
   } catch (error) {
-    // 액세스 토큰이 만료된 경우
+    // accessToken expires
     if (error.name === "TokenExpiredError") {
-      // 리프레시 토큰 가져오기
       const refreshToken = req.cookies.refreshToken;
-      // 리프레시 토큰이 없는 경우
+      // no refreshToken
       if (!refreshToken) {
         return res
           .status(401)
@@ -21,37 +21,48 @@ const verifyToken = async (req, res, next) => {
       }
 
       try {
-        // 리프레시 토큰 검증
+        const findUser = await User.findOne({ refreshToken: refreshToken });
+
         const decodedRefreshToken = jwt.verify(
           refreshToken,
           process.env.REFRESH_TOKEN_SECRET
         );
+        if (decodedRefreshToken._id !== findUser._id.toString())
+          return res
+            .status(403)
+            .json({ success: false, message: "Invalid refresh token" });
 
-        // 새로운 액세스 토큰 발급
         const newAccessToken = jwt.sign(
-          { _id: decodedRefreshToken._id },
+          { _id: findUser._id },
           process.env.ACCESS_TOKEN_SECRET,
           {
-            expiresIn: "10s",
+            expiresIn: "1h",
+            issuer: "soundmeout",
+          }
+        );
+        const newRefreshToken = jwt.sign(
+          { _id: findUser._id },
+          process.env.REFRESH_TOKEN_SECRET,
+          {
+            expiresIn: "14d",
             issuer: "soundmeout",
           }
         );
 
-        // 새로운 액세스 토큰을 헤더에 설정
-        res.setHeader("Authorization", newAccessToken);
+        findUser.refreshToken = newRefreshToken;
+        await findUser.save();
 
-        // 유저 정보를 req.user에 저장
-        req.user = { _id: decodedRefreshToken._id };
-
+        res.cookie("refreshToken", newRefreshToken, {
+          maxAge: 14 * 24 * 60 * 60 * 1000, // 14일
+        });
+        req._id = decoded._id;
         next();
       } catch (refreshTokenError) {
-        // 리프레시 토큰이 유효하지 않은 경우
         return res
           .status(403)
           .json({ success: false, message: "Invalid refresh token" });
       }
     } else {
-      // 액세스 토큰이 유효하지 않은 경우
       return res
         .status(403)
         .json({ success: false, message: "Invalid access token" });

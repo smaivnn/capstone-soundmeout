@@ -31,7 +31,7 @@ const handleLogin = async (req, res, next) => {
         { _id: findUser._id },
         process.env.ACCESS_TOKEN_SECRET,
         {
-          expiresIn: "10s",
+          expiresIn: "1h",
         }
       );
 
