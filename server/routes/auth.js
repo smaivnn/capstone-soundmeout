@@ -4,6 +4,11 @@ const router = express.Router();
 const kakaoLoginController = require("../controllers/auth/kakaoLoginController");
 const googleLoginController = require("../controllers/auth/googleLoginController");
 const googleLoginRedirectController = require("../controllers/auth/googleLoginRedirectController");
+const signupController = require("../controllers/auth/signupController");
+const loginController = require("../controllers/auth/loginController");
+const verifyJwtToken = require("../utils/middleware/verifyJwtToken");
+const accountController = require("../controllers/auth/accountController");
+const mailController = require("../controllers/auth/mailController");
 
 /**
  * @swagger
@@ -53,7 +58,7 @@ const googleLoginRedirectController = require("../controllers/auth/googleLoginRe
  *               $ref: '#/components/schemas/responseFailed'
  *
  */
-router.post("/signup");
+router.post("/signup", signupController.handleSignup);
 
 /**
  * @swagger
@@ -107,14 +112,14 @@ router.post("/signup");
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.post("/login");
+router.post("/login", loginController.handleLogin);
 
 /**
  * @swagger
  * /auth/leave:
  *   post:
  *     summary: 계정 탈퇴
- *     description: header로 access_token과 body로 user_id를 받아 검증 후 계정 탈퇴를 진행한다.
+ *     description: header로 access_token과 body로 _id를 받아 검증 후 계정 탈퇴를 진행한다.
  *     tags:
  *       - Auth
  *     parameters:
@@ -125,18 +130,18 @@ router.post("/login");
  *         schema:
  *           type: string
  *     requestBody:
- *        description: user_id를 body에넣어주세요
+ *        description: login_id를 body에넣어주세요
  *        required: true
  *        content:
  *          application/json:
  *            schema:
  *             type: object
  *             properties:
- *               user_id:
+ *               login_id:
  *                 type: integer
  *                 example: 1234
  *             required:
- *               - user_id
+ *               - login_id
  *     responses:
  *       204:
  *         description: No Content
@@ -157,14 +162,18 @@ router.post("/login");
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.post(`/leave`);
+router.post(
+  `/leave`,
+  verifyJwtToken.verifyToken,
+  accountController.handleDeleteAccount
+);
 
 /**
  * @swagger
  * /auth/update-password:
  *   post:
  *     summary: 비밀번호 변경
- *     description: header로 access_token과 body로 user_id, old_password, new_password를 받아 검증 후 비밀번호를 변경한다.
+ *     description: header로 access_token과 body로 login_id, old_password, new_password를 받아 검증 후 비밀번호를 변경한다.
  *     tags:
  *       - Auth
  *     parameters:
@@ -175,14 +184,14 @@ router.post(`/leave`);
  *         schema:
  *           type: string
  *     requestBody:
- *        description: user_id, old_password, new_password를 넣어주세요.
+ *        description: login_id, old_password, new_password를 넣어주세요.
  *        required: true
  *        content:
  *          application/json:
  *            schema:
  *             type: object
  *             properties:
- *               user_id:
+ *               login_id:
  *                 type: integer
  *                 example: 1231
  *               old_password:
@@ -192,7 +201,7 @@ router.post(`/leave`);
  *                 type: string
  *                 example: asdf1234
  *             required:
- *               - user_id
+ *               - login_id
  *               - old_password
  *               - new_password
  *     responses:
@@ -221,7 +230,64 @@ router.post(`/leave`);
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.post(`/update-password`);
+router.post(
+  `/update-password`,
+  verifyJwtToken.verifyToken,
+  accountController.handleUpdatePassword
+);
+
+/**
+ * @swagger
+ * /auth/find-password:
+ *   post:
+ *     summary: 비밀번호 찾기
+ *     description: body로 name,email 를 받아서 해당 유저의 이메일로 비밀번호 변경 링크를 보낸다.
+ *     tags:
+ *       - Auth
+ *     requestBody:
+ *        description: name, email를 넣어주세요.
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: qwer1234
+ *               email:
+ *                 type: string
+ *                 example: asdf1234
+ *             required:
+ *               - name
+ *               - email
+ *     responses:
+ *       204:
+ *         description: No Content
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/responseSuccess'
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/responseFailed'
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/responseFailed'
+ *       403:
+ *         description: Forbidden
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/responseFailed'
+ */
+router.post("/find-password", mailController.handlePasswordMail);
 
 router.post("/kakao", kakaoLoginController.handleKakaoLogin);
 
