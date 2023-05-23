@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const signupController = require("../controllers/auth/signupController");
+const kakaoLoginController = require("../controllers/auth/kakaoLoginController");
+const googleLoginController = require("../controllers/auth/googleLoginController");
+const googleLoginRedirectController = require("../controllers/auth/googleLoginRedirectController");
 
 /**
  * @swagger
@@ -51,7 +53,7 @@ const signupController = require("../controllers/auth/signupController");
  *               $ref: '#/components/schemas/responseFailed'
  *
  */
-router.post("/signup",signupController.handleSignup);
+router.post("/signup");
 
 /**
  * @swagger
@@ -220,5 +222,13 @@ router.post(`/leave`);
  *               $ref: '#/components/schemas/responseFailed'
  */
 router.post(`/update-password`);
+
+router.post("/kakao", kakaoLoginController.handleKakaoLogin);
+
+router.get("/google", googleLoginController.handleGoogleLogin);
+router.get(
+  "/google/redirect",
+  googleLoginRedirectController.handleGoogleRedirect
+);
 
 module.exports = router;

@@ -3,11 +3,15 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
   {
+    loginId: {
+      type: String,
+      required: true,
+    },
     name: {
       type: String,
       required: true,
     },
-    userId: {
+    email: {
       type: String,
       required: true,
     },
@@ -15,23 +19,20 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    company: {
-      type: String,
-      required: true,
+    OAuth: {
+      provider: {
+        type: String,
+      },
     },
-    email: {
+    refreshToken: {
       type: String,
-      requireed: true,
     },
     roles: {
-      Guest: {
-        type: Number,
-        default: 2001,
-      },
-      User: Number,
-      Admin: Number,
+      type: Array,
     },
-    refreshToken: String,
+    enabled: {
+      type: Boolean,
+    },
   },
   {
     timestamps: true,
