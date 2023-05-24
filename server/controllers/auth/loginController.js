@@ -10,9 +10,8 @@ const handleLogin = async (req, res, next) => {
       success: false,
       status: 400,
       source: "loginController/handleLogin",
-      type: "request body not enough",
-      message:
-        "Request body is not enough. Please provide id, name, email and password.",
+      type: "로그인 실패",
+      message: "request body is not enough.",
     });
   }
 
@@ -21,7 +20,9 @@ const handleLogin = async (req, res, next) => {
     if (!findUser) {
       return res.status(400).json({
         loginSuccess: false,
-        message: "User not found.",
+        source: "loginController/handleLogin",
+        type: "로그인 실패",
+        message: "user does not exist",
       });
     }
     match = await bcrypt.compare(password, findUser.password);
@@ -49,19 +50,23 @@ const handleLogin = async (req, res, next) => {
       const result = await findUser.save();
 
       res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        sameSite: "None",
         maxAge: 14 * 24 * 60 * 60 * 1000, // 14일
+        secure: true,
       });
-      // res.cookie("refreshToken", refreshToken, {
-      //   httpOnly: true,
-      //   sameSite: "None",
-      //   maxAge: 14 * 24 * 60 * 60 * 1000, // 14일
-      //   secure: true,
-      // });
-      res.status(201).json({ success: true, accessToken });
+      res.status(201).json({
+        status: 201,
+        success: true,
+        message: "성공적인 로그인",
+        access_token: accessToken,
+      });
     } else {
       return res.status(400).json({
+        status: 400,
         succes: false,
         message: "wrong password",
+        type: "로그인 실패",
       });
     }
     next();
