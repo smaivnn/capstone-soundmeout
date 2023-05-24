@@ -16,6 +16,17 @@ const handleSignup = async (req, res, next) => {
   }
 
   try {
+    const findUser = await User.findOne({ loginId: id });
+    if (findUser) {
+      return res.status(400).json({
+        success: false,
+        status: 400,
+        source: "signupController/handleSignup",
+        type: "이메일 중복",
+        message: "id already exists",
+      });
+    }
+
     const user = await User.create({
       name,
       loginId: id,
@@ -25,7 +36,7 @@ const handleSignup = async (req, res, next) => {
     res.status(201).json({
       success: true,
       status: 201,
-      message: `user signup successful`,
+      message: `성공적인 회원가입`,
     });
     next();
   } catch (error) {

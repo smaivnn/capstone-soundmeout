@@ -9,6 +9,7 @@ const loginController = require("../controllers/auth/loginController");
 const verifyJwtToken = require("../utils/middleware/verifyJwtToken");
 const accountController = require("../controllers/auth/accountController");
 const mailController = require("../controllers/auth/mailController");
+const refreshTokenController = require("../controllers/auth/refreshTokenController");
 
 /**
  * @swagger
@@ -205,6 +206,22 @@ router.post(
  *               - old_password
  *               - new_password
  *     responses:
+ *       200:
+ *         description: Ok
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: integer
+ *                   example: 200
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: 비밀번호 변경 성공
  *       204:
  *         description: No Content
  *         content:
@@ -264,10 +281,23 @@ router.post(
  *     responses:
  *       204:
  *         description: No Content
- *         content:
+ *          content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/responseSuccess'
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: integer
+ *                   example: 200
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: 성공적인 조회
+ *                 access_token:
+ *                  type: string
+ *                  example: "access_token"
  *       400:
  *         description: Bad Request
  *         content:
@@ -297,4 +327,39 @@ router.get(
   googleLoginRedirectController.handleGoogleRedirect
 );
 
+/**
+ * @swagger
+ * /auth/refersh-token:
+ *   get:
+ *     summary: 토큰 재발급
+ *     description: cookie의 jwt 토큰값을 확인해서 access_token을 재발급한다.
+ *     tags:
+ *       - Auth
+ *     responses:
+ *       204:
+ *         description: No Content
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/responseSuccess'
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/responseFailed'
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/responseFailed'
+ *       403:
+ *         description: Forbidden
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/responseFailed'
+ */
+router.get("/refresh-token", refreshTokenController.handleRefreshToken);
 module.exports = router;
