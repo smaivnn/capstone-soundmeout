@@ -1,6 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
+const getUserProfileController = require("../controllers/user/getUserProfileController");
+const getUserTopicController = require("../controllers/user/getUserTopicController");
+const getUserPaperController = require("../controllers/user/getUserPaperController");
+const searchUserController = require("../controllers/user/searchUserController");
+
 /**
  * @swagger
  * /user/profile/{user_id}:
@@ -43,7 +48,7 @@ const router = express.Router();
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.get(`/profile/${user_id}`);
+router.get(`/profile/:loginId`, getUserProfileController.handleUserProfile);
 
 /**
  * @swagger
@@ -87,7 +92,7 @@ router.get(`/profile/${user_id}`);
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.get(`/topic/${user_id}`);
+router.get(`/topic/:loginId`, getUserTopicController.handleUserTopic);
 
 /**
  * @swagger
@@ -149,7 +154,7 @@ router.get(`/topic/${user_id}`);
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.get(`/paper/${user_id}`);
+router.get(`/paper/:loginId`, getUserPaperController.handleUserPaper);
 
 /**
  * @swagger
@@ -193,5 +198,6 @@ router.get(`/paper/${user_id}`);
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.post(`/search`);
+router.post(`/search/:keyWord`, searchUserController.handleSearchUser);
+
 module.exports = router;
