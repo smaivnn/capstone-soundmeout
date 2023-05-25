@@ -10,6 +10,8 @@ const verifyJwtToken = require("../utils/middleware/verifyJwtToken");
 const accountController = require("../controllers/auth/accountController");
 const mailController = require("../controllers/auth/mailController");
 const refreshTokenController = require("../controllers/auth/refreshTokenController");
+const naverLoginController = require("../controllers/auth/naverLoginController");
+const naverLoginRedirectController = require("../controllers/auth/naverLoginRedirectController");
 
 /**
  * @swagger
@@ -256,7 +258,7 @@ router.post(
 /**
  * @swagger
  * /auth/find-password:
- *   post:
+ *   get:
  *     summary: 비밀번호 찾기
  *     description: body로 name,email 를 받아서 해당 유저의 이메일로 비밀번호 변경 링크를 보낸다.
  *     tags:
@@ -317,7 +319,7 @@ router.post(
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.post("/find-password", mailController.handlePasswordMail);
+router.get("/find-password", mailController.handlePasswordMail);
 
 router.post("/kakao", kakaoLoginController.handleKakaoLogin);
 
@@ -326,6 +328,8 @@ router.get(
   "/google/redirect",
   googleLoginRedirectController.handleGoogleRedirect
 );
+router.get("/naver/callback", naverLoginRedirectController.handleNaverRedirect);
+router.get("/naver", naverLoginController.handleNaverLogin);
 
 /**
  * @swagger
