@@ -2,7 +2,7 @@ const axios = require("axios");
 const User = require("../../model/User");
 const { IssueToken } = require("./issueToken");
 
-const redirectURI = "http://localhost:3500/auth/naver/callback";
+const redirectURI = process.env.NAVER_REDIRECT_URI;
 const handleNaverRedirect = async (req, res) => {
   const { code, state } = req.query;
   const NAVER_GET_TOKEN_URL =

@@ -1,4 +1,4 @@
-const redirectURI = "http://localhost:3500/auth/naver/callback";
+const redirectURI = process.env.NAVER_REDIRECT_URI;
 
 const handleNaverLogin = async (req, res) => {
   res.redirect(
