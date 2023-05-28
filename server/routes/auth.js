@@ -281,23 +281,23 @@ router.post(
  *               - name
  *               - email
  *     responses:
- *       204:
- *         description: No Content
+ *       200:
+ *         description: Ok
  *          content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: integer
- *                   example: 200
- *                 success:
- *                   type: boolean
- *                   example: true
- *                 message:
- *                   type: string
- *                   example: 성공적인 조회
- *                 access_token:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                status:
+ *                  type: integer
+ *                  example: 200
+ *                success:
+ *                  type: boolean
+ *                  example: true
+ *                message:
+ *                  type: string
+ *                  example: 성공적인 조회
+ *                access_token:
  *                  type: string
  *                  example: "access_token"
  *       400:

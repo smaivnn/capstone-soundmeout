@@ -16,4 +16,4 @@ COPY . .
 EXPOSE 3500
 # 여기서는 서버를 구동하도록 node app.js을 실행하는 기본 npm start을 사용할 것이다.
 # 서버가 구동되는 파일명 server.js
-CMD [ "npm", "run","dev" ]
+CMD [ "npm", "start" ]

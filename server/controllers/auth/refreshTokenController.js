@@ -1,5 +1,6 @@
 const User = require("../../model/User");
 const jwt = require("jsonwebtoken");
+const { IssueToken } = require("./issueToken");
 
 const handleRefreshToken = async (req, res) => {
   const cookies = req.cookies;
@@ -31,25 +32,11 @@ const handleRefreshToken = async (req, res) => {
           type: "Invalid refresh token",
         });
       }
-      const accessToken = jwt.sign(
-        {
-          _id: findUser._id,
-        },
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: "1h" }
-      );
-
-      const newRefreshToken = jwt.sign(
-        {
-          _id: findUser._id,
-        },
-        process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: "14d" }
-      );
-      findUser.refreshToken = newRefreshToken;
+      const tokens = await IssueToken(findUser);
+      findUser.refreshToken = tokens.refreshToken;
       const result = await findUser.save();
 
-      res.cookie("refreshToken", newRefreshToken, {
+      res.cookie("refreshToken", tokens.refreshToken, {
         httpOnly: true,
         sameSite: "None",
         maxAge: 14 * 24 * 60 * 60 * 1000, // 14일
@@ -59,7 +46,7 @@ const handleRefreshToken = async (req, res) => {
         status: 200,
         success: true,
         message: "토큰 재발급 성공",
-        access_token: accessToken,
+        access_token: tokens.accessToken,
       });
     }
   );

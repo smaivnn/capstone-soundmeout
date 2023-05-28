@@ -1,6 +1,7 @@
 const User = require("../../model/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const { IssueToken } = require("./issueToken");
 
 const handleLogin = async (req, res, next) => {
   const { id, password } = req.body;
@@ -27,29 +28,12 @@ const handleLogin = async (req, res, next) => {
     }
     match = await bcrypt.compare(password, findUser.password);
     if (match) {
-      // generate accessToken
-      const accessToken = jwt.sign(
-        { _id: findUser._id },
-        process.env.ACCESS_TOKEN_SECRET,
-        {
-          expiresIn: "1h",
-          issuer: "soundmeout",
-        }
-      );
-
-      //generate refreshToken
-      const refreshToken = jwt.sign(
-        { _id: findUser.id },
-        process.env.REFRESH_TOKEN_SECRET,
-        {
-          expiresIn: "14d",
-          issuer: "soundmeout",
-        }
-      );
-      findUser.refreshToken = refreshToken;
+      // token 발급
+      const token = await IssueToken(findUser);
+      findUser.refreshToken = token.refreshToken;
       const result = await findUser.save();
 
-      res.cookie("refreshToken", refreshToken, {
+      res.cookie("refreshToken", token.refreshToken, {
         httpOnly: true,
         sameSite: "None",
         maxAge: 14 * 24 * 60 * 60 * 1000, // 14일
@@ -59,7 +43,7 @@ const handleLogin = async (req, res, next) => {
         status: 201,
         success: true,
         message: "성공적인 로그인",
-        access_token: accessToken,
+        access_token: token.accessToken,
       });
     } else {
       return res.status(400).json({

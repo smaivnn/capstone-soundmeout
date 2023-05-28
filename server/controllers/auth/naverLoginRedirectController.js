@@ -40,7 +40,6 @@ const handleNaverRedirect = async (req, res) => {
       Authorization: `Bearer ${accessToken}`,
     },
   });
-  console.log(getUserInfo);
   if (!getUserInfo) {
     return res.status(400).json({
       status: 400,
@@ -50,8 +49,6 @@ const handleNaverRedirect = async (req, res) => {
     });
   }
   const email = getUserInfo.data.response.email;
-  console.log(email);
-  console.log(getUserInfo.data.response);
   try {
     let findUser = await User.findOne({ email: email });
     if (!findUser) {
