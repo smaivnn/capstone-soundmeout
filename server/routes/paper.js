@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
+const {verifyToken} = require("../utils/middleware/verifyJwtToken");
+
+const createPaprtCotroller = require("../controllers/paper/createPaperController");
+
 /**
  * @swagger
  * /paper/create:
@@ -69,7 +73,11 @@ const router = express.Router();
  *               $ref: '#/components/schemas/responseFailed'
  *
  */
-router.post("/create");
+router.post(
+  "/create",
+  verifyToken,
+  createPaprtCotroller.handleCreatePaper
+);
 
 /**
  * @swagger
@@ -131,7 +139,7 @@ router.post("/create");
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.patch(`/delete/${paper_id}`);
+router.patch(`/delete/:paper_id`);
 
 /**
  * @swagger
@@ -212,6 +220,6 @@ router.patch(`/delete/${paper_id}`);
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.put(`/update/${paper_id}`);
+router.put(`/update/:paper_id`);
 
 module.exports = router;

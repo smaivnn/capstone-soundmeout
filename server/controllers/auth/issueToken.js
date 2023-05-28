@@ -5,10 +5,12 @@ const bcrypt = require("bcrypt");
 const IssueToken = async (userInfo) => {
   const accessToken = jwt.sign(
     {
-      loginId: userInfo.loginId,
-      email: userInfo.email,
-      name: userInfo.name,
-      roles: userInfo.roles,
+      userInfo: {
+        loginId: userInfo.loginId,
+        email: userInfo.email,
+        name: userInfo.name,
+        roles: userInfo.roles,
+      },
     },
     process.env.ACCESS_TOKEN_SECRET,
     { expiresIn: "10m" }

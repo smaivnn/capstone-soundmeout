@@ -32,5 +32,6 @@ app.use(morganMiddleware);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/auth", require("./routes/auth"));
+app.use("/paper", require("./routes/paper"));
 
 app.listen(PORT, () => logger.info(`Server running on port ${PORT}`));

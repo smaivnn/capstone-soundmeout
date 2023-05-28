@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const Paper = require("./Paper");
 
 const topicSchema = new Schema(
   {
@@ -13,9 +12,12 @@ const topicSchema = new Schema(
       ref: "User",
       required: true,
     },
-    paper: {
-      type: [Paper.schema],
-    },
+    papers: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Paper",
+      },
+    ],
     visible: {
       type: Boolean,
     },
