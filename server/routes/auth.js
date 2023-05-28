@@ -3,7 +3,6 @@ const router = express.Router();
 
 const kakaoLoginController = require("../controllers/auth/kakaoLoginController");
 const googleLoginController = require("../controllers/auth/googleLoginController");
-const googleLoginRedirectController = require("../controllers/auth/googleLoginRedirectController");
 const signupController = require("../controllers/auth/signupController");
 const loginController = require("../controllers/auth/loginController");
 const verifyJwtToken = require("../utils/middleware/verifyJwtToken");
@@ -323,11 +322,7 @@ router.get("/find-password", mailController.handlePasswordMail);
 
 router.post("/kakao", kakaoLoginController.handleKakaoLogin);
 
-router.get("/google", googleLoginController.handleGoogleLogin);
-router.get(
-  "/google/redirect",
-  googleLoginRedirectController.handleGoogleRedirect
-);
+router.get("/google", googleLoginController.handleGoogle);
 router.get("/naver/callback", naverLoginRedirectController.handleNaverRedirect);
 router.get("/naver", naverLoginController.handleNaverLogin);
 
