@@ -24,6 +24,9 @@ const paperSchema = new Schema(
     visible: {
       type: Boolean,
     },
+    delete: {
+      type: Boolean,
+    },
   },
   {
     timestamps: true,

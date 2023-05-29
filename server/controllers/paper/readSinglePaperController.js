@@ -1,7 +1,7 @@
 const Paper = require("../../model/Paper");
 const User = require("../../model/User");
 
-const handlePaperVisible = async (req, res) => {
+const handleSinglePaper = async (req, res) => {
   const { _id } = req.userInfo;
   const { paper_id } = req.body;
   /**
@@ -18,7 +18,10 @@ const handlePaperVisible = async (req, res) => {
     });
   }
   try {
-    const foundPaper = await Paper.findOne({ _id: paper_id });
+    const foundPaper = await Paper.findOne(
+      { _id: paper_id, visible: true, delete: false },
+      { text: 1, comment: 1 }
+    );
     if (!foundPaper) {
       return res.status(400).json({
         status: 400,
@@ -29,13 +32,11 @@ const handlePaperVisible = async (req, res) => {
       });
     }
 
-    foundPaper.visible = false;
-    foundPaper.save();
-
-    return res.status(200).json({
+    return res.status(201).json({
       status: 200,
       success: true,
       message: "성공적인 조회",
+      paperInfo: foundPaper,
     });
   } catch (error) {
     res.status(500).json({
@@ -48,4 +49,4 @@ const handlePaperVisible = async (req, res) => {
   }
 };
 
-module.exports = { handlePaperVisible };
+module.exports = { handleSinglePaper };

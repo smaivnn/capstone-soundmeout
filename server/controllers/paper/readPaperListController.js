@@ -1,0 +1,50 @@
+const Paper = require("../../model/Paper");
+const User = require("../../model/User");
+
+const handlePaperList = async (req, res) => {
+  const { _id } = req.userInfo;
+  const { topic_id } = req.body;
+
+  if (!_id || !topic_id) {
+    return res.status(400).json({
+      status: 400,
+      success: false,
+      source: "createPaperController.js/handleCreatePaper",
+      type: "Paper 생성 실패",
+      message: "body 내용 불충분",
+    });
+  }
+
+  try {
+    const foundPaperList = await Paper.find(
+      { topic: topic_id, visible: true, delete: false },
+      { text: 1, comment: 1 }
+    );
+    if (!foundPaper) {
+      return res.status(400).json({
+        status: 400,
+        success: false,
+        source: "createPaperController.js/handleCreatePaper",
+        type: "Paper 생성 실패",
+        message: "body 내용 불충분",
+      });
+    }
+
+    return res.status(201).json({
+      status: 200,
+      success: true,
+      message: "성공적인 조회",
+      paperArray: foundPaperList,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      status: 500,
+      source: "createPaperController.js/handleCreatePaper",
+      type: "server error",
+      message: `Internal server error`,
+    });
+  }
+};
+
+module.exports = { handlePaperList };
