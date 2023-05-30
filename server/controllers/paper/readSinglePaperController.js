@@ -2,18 +2,17 @@ const Paper = require("../../model/Paper");
 const User = require("../../model/User");
 
 const handleSinglePaper = async (req, res) => {
-  const { _id } = req.userInfo;
-  const { paper_id } = req.body;
+  const { paper_id } = req.query;
   /**
    * 모두에게 공개되어도 됨.
    * 그냥 단일 페이퍼를 제공한다.
    */
-  if (!_id || !paper_id) {
+  if (!paper_id) {
     return res.status(400).json({
       status: 400,
       success: false,
-      source: "createPaperController.js/handleCreatePaper",
-      type: "Paper 생성 실패",
+      source: "readSinglePaperController.js/handleSinglePaper",
+      type: "Paper 읽기 실패",
       message: "body 내용 불충분",
     });
   }
@@ -26,9 +25,9 @@ const handleSinglePaper = async (req, res) => {
       return res.status(400).json({
         status: 400,
         success: false,
-        source: "createPaperController.js/handleCreatePaper",
-        type: "Paper 생성 실패",
-        message: "body 내용 불충분",
+        source: "readSinglePaperController.js/handleSinglePaper",
+        type: "Paper 읽기 실패",
+        message: "해당하는 페이퍼 없음",
       });
     }
 
@@ -42,7 +41,7 @@ const handleSinglePaper = async (req, res) => {
     res.status(500).json({
       success: false,
       status: 500,
-      source: "createPaperController.js/handleCreatePaper",
+      source: "readSinglePaperController.js/handleSinglePaper",
       type: "server error",
       message: `Internal server error`,
     });

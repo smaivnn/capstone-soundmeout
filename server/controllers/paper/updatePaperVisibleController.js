@@ -12,7 +12,7 @@ const handlePaperVisible = async (req, res) => {
     return res.status(400).json({
       status: 400,
       success: false,
-      source: "createPaperController.js/handleCreatePaper",
+      source: "updatePaperVisibleController.js/handlePaperVisible",
       type: "Paper 생성 실패",
       message: "body 내용 불충분",
     });
@@ -23,13 +23,13 @@ const handlePaperVisible = async (req, res) => {
       return res.status(400).json({
         status: 400,
         success: false,
-        source: "createPaperController.js/handleCreatePaper",
+        source: "updatePaperVisibleController.js/handlePaperVisible",
         type: "Paper 생성 실패",
         message: "body 내용 불충분",
       });
     }
 
-    foundPaper.visible = false;
+    foundPaer.visible = foundPaper.visible === false ? true : false;
     foundPaper.save();
 
     return res.status(200).json({
@@ -41,7 +41,7 @@ const handlePaperVisible = async (req, res) => {
     res.status(500).json({
       success: false,
       status: 500,
-      source: "createPaperController.js/handleCreatePaper",
+      source: "updatePaperVisibleController.js/handlePaperVisible",
       type: "server error",
       message: `Internal server error`,
     });

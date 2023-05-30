@@ -1,9 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-const {verifyToken} = require("../utils/middleware/verifyJwtToken");
+const { verifyToken } = require("../utils/middleware/verifyJwtToken");
 
 const createPaprtCotroller = require("../controllers/paper/createPaperController");
+const readPaperListController = require(`../controllers/paper/readPaperListController`);
+const readSinglePaperController = require(`../controllers/paper/readSinglePaperController`);
+const updatePaperVisibleController = require(`../controllers/paper/updatePaperVisibleController`);
+const deletePaperController = require(`../controllers/paper/deletePaperController`);
 
 /**
  * @swagger
@@ -21,7 +25,7 @@ const createPaprtCotroller = require("../controllers/paper/createPaperController
  *         schema:
  *           type: string
  *     requestBody:
- *        description: text를 body에 넣어주세요
+ *        description: text,topic_id, redirectPath를 body에 넣어주세요
  *        required: true
  *        content:
  *          application/json:
@@ -31,6 +35,12 @@ const createPaprtCotroller = require("../controllers/paper/createPaperController
  *               text:
  *                 type: string
  *                 example: "최성민 슬하에 자녀가 1명 있다."
+ *               topic_id:
+ *                 type: string
+ *                 example: "5f867d3c8f384f7f245c31e6"
+ *               redirectPath:
+ *                 type: string
+ *                 example: "/home/secx"
  *             required:
  *               - text
  *     responses:
@@ -73,18 +83,14 @@ const createPaprtCotroller = require("../controllers/paper/createPaperController
  *               $ref: '#/components/schemas/responseFailed'
  *
  */
-router.post(
-  "/create",
-  verifyToken,
-  createPaprtCotroller.handleCreatePaper
-);
+router.post("/create", verifyToken, createPaprtCotroller.handleCreatePaper);
 
 /**
  * @swagger
- * /paper/delete/{paper_id}:
+ * /paper/delete:
  *   patch:
  *     summary: 페이퍼 삭제
- *     description: header로 access_token과 path파라미터로 paper_id를 받아 토픽을 삭제한다.
+ *     description: header로 access_token과 path파라미터로 paper_id, redirectPath를 받아 토픽을 삭제한다.
  *     tags:
  *       - Paper
  *     parameters:
@@ -94,12 +100,19 @@ router.post(
  *         required: true
  *         schema:
  *           type: string
- *       - in: path
- *         name: paper_id
- *         description: paper_id
- *         required: true
- *         schema:
- *           type: integer
+ *     requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *             type: object
+ *             properties:
+ *               paper_id:
+ *                 type: mongoDB objectId
+ *                 example: "5f867d3c8f384f7f245c31e6"
+ *               redirectPath:
+ *                 type: string
+ *                 example: "/topic/list"
  *     responses:
  *       200:
  *         description: Ok
@@ -139,14 +152,14 @@ router.post(
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.patch(`/delete/:paper_id`);
+router.patch(`/delete`, verifyToken, deletePaperController.handleDeletePaper);
 
 /**
  * @swagger
- * /paper/update/{paper_id}:
+ * /paper/update/visible:
  *   put:
- *     summary: 페이퍼에 코멘트 달기
- *     description: header로 access_token, path파라미터로 topic_id, body로 comment, public를 받아서 페이퍼 수정한다.
+ *     summary: 페이퍼에 공개여부 조정
+ *     description: header로 access_token, body로 paper_id를 받아고 페이퍼의 공개여부를 수정한다.
  *     tags:
  *       - Paper
  *     parameters:
@@ -156,28 +169,19 @@ router.patch(`/delete/:paper_id`);
  *         required: true
  *         schema:
  *           type: string
- *       - in: path
- *         name: topic_id
- *         description: topic_id
- *         required: true
- *         schema:
- *           type: integer
  *     requestBody:
- *        description: comment와 pulic여부를 body에 넣어주세요.
+ *        description: paper_id를 입력하세요
  *        required: true
  *        content:
  *          application/json:
  *            schema:
  *             type: object
  *             properties:
- *               commnet:
+ *               paper_id:
  *                 type: string
- *                 example: "감자합니다."
- *               public:
- *                type: boolean
- *                eample: true
+ *                 example: "5f867d3c8f384f7f245c31e6"
  *             required:
- *               - text
+ *               - paper_id
  *     responses:
  *       200:
  *         description: Ok
@@ -220,6 +224,127 @@ router.patch(`/delete/:paper_id`);
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.put(`/update/:paper_id`);
+router.put(
+  `/update/visible`,
+  verifyToken,
+  updatePaperVisibleController.handlePaperVisible
+);
 
+/**
+ * @swagger
+ * /read/:topic_id:
+ *   get:
+ *     summary: 토픽 내 페이퍼 리스트 불러오기
+ *     description: 토픽 내의 페이퍼 리스트를 불러온다.
+ *     tags:
+ *       - Paper
+ *     parameters:
+ *       - in: query
+ *         name: topic_id
+ *         description: topic_id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Ok
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: integer
+ *                   example: 200
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: 성공적인 수정
+ *                 paperArray:
+ *                   type: array
+ *                   example: [{paper_id:1,text:"감자합니다",visible:true}]
+ *                 redirectPath:
+ *                   type: string
+ *                   example: /paper/{paper_id}
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/responseFailed'
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/responseFailed'
+ *       403:
+ *         description: Forbidden
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/responseFailed'
+ */
+router.get(`/read/:topic_id`, readPaperListController.handlePaperList);
+
+/**
+ * @swagger
+ * /read/:paper_id:
+ *   get:
+ *     summary: 단일 페이퍼 불러오기
+ *     description: 단일 페이퍼 불러오기
+ *     tags:
+ *       - Paper
+ *     parameters:
+ *       - in: query
+ *         name: paper_id
+ *         description: paper_id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Ok
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: integer
+ *                   example: 200
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: 성공적인 수정
+ *                 paperObject:
+ *                   type: object
+ *                   example: {paper_id:1,text:"감자합니다",visible:true}
+ *                 redirectPath:
+ *                   type: string
+ *                   example: /paper/{paper_id}
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/responseFailed'
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/responseFailed'
+ *       403:
+ *         description: Forbidden
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/responseFailed'
+ */
+router.get(`read/:paper_id`, readSinglePaperController.handleSinglePaper);
 module.exports = router;

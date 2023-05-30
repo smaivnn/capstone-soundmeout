@@ -2,15 +2,14 @@ const Paper = require("../../model/Paper");
 const User = require("../../model/User");
 
 const handlePaperList = async (req, res) => {
-  const { _id } = req.userInfo;
-  const { topic_id } = req.body;
+  const { topic_id } = req.query;
 
-  if (!_id || !topic_id) {
+  if (!topic_id) {
     return res.status(400).json({
       status: 400,
       success: false,
-      source: "createPaperController.js/handleCreatePaper",
-      type: "Paper 생성 실패",
+      source: "readPaperListController.js/handlePaperList",
+      type: "Paper 읽기 실패",
       message: "body 내용 불충분",
     });
   }
@@ -24,9 +23,9 @@ const handlePaperList = async (req, res) => {
       return res.status(400).json({
         status: 400,
         success: false,
-        source: "createPaperController.js/handleCreatePaper",
-        type: "Paper 생성 실패",
-        message: "body 내용 불충분",
+        source: "readPaperListController.js/handlePaperList",
+        type: "Paper 읽기 실패",
+        message: "해당하는 페이퍼 없음",
       });
     }
 
@@ -40,7 +39,7 @@ const handlePaperList = async (req, res) => {
     res.status(500).json({
       success: false,
       status: 500,
-      source: "createPaperController.js/handleCreatePaper",
+      source: "readPaperListController.js/handlePaperList",
       type: "server error",
       message: `Internal server error`,
     });

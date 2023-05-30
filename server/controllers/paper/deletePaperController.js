@@ -3,16 +3,16 @@ const User = require("../../model/User");
 
 const handleDeletePaper = async (req, res) => {
   const { _id, loginId, email, name, roles } = req.userInfo;
-  const { topic_id, paper_id, redirectPath } = req.body;
+  const { paper_id, redirectPath } = req.body;
   /**
    * 지우는 과정은 함부로 하면 안됨.
    * 로그인 된 유저 정보와, 본인의 토픽이 맞는지 검증한다.
    */
-  if (!_id || !topic_id || !paper_id) {
+  if (!_id || !paper_id) {
     return res.status(400).json({
       status: 400,
       success: false,
-      source: "createPaperController.js/handleCreatePaper",
+      source: "deletePaperController.js/handleDeletePaper",
       type: "Paper 생성 실패",
       message: "body 내용 불충분",
     });
@@ -40,7 +40,7 @@ const handleDeletePaper = async (req, res) => {
     res.status(500).json({
       success: false,
       status: 500,
-      source: "createPaperController.js/handleCreatePaper",
+      source: "deletePaperController.js/handleDeletePaper",
       type: "server error",
       message: `Internal server error`,
     });
