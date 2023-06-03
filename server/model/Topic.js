@@ -18,6 +18,11 @@ const topicSchema = new Schema(
     },
     visible: {
       type: Boolean,
+      default: true,
+    },
+    deleted: {
+      type: Boolean,
+      default: false,
     },
   },
   {

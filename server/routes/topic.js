@@ -1,5 +1,9 @@
 const express = require("express");
 const router = express.Router();
+const createTopicController = require("../controllers/topic/createTopicController");
+const getTopicController = require("../controllers/topic/getTopicController");
+const deleteTopicController = require("../controllers/topic/deleteTopicController");
+const updateTopicController = require("../controllers/topic/updateTopicController");
 
 /**
  * @swagger
@@ -73,7 +77,7 @@ const router = express.Router();
  *               $ref: '#/components/schemas/responseFailed'
  *
  */
-router.post("/create");
+router.post("/create", createTopicController.handleCreateTopic);
 
 /**
  * @swagger
@@ -117,7 +121,7 @@ router.post("/create");
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.get(`/${topic_id}`);
+router.get(`/:topic_id`, getTopicController.handleGetTopic);
 
 /**
  * @swagger
@@ -166,7 +170,7 @@ router.get(`/${topic_id}`);
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.patch(`/update/${topic_id}`);
+router.patch(`/update/:topic_id`, deleteTopicController.handleDeleteTopic);
 
 /**
  * @swagger
@@ -248,6 +252,6 @@ router.patch(`/update/${topic_id}`);
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.put(`/update/${topic_id}`);
+router.put(`/update/:topic_id`, updateTopicController.handleUpdateTopic);
 
 module.exports = router;

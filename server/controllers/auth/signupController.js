@@ -2,7 +2,7 @@ const User = require("../../model/User");
 const bcrypt = require("bcrypt");
 
 const handleSignup = async (req, res, next) => {
-  const { id, name, email, password } = req.body;
+  const { loginId, name, email, password } = req.body;
   console.log(id, name, email, password);
   if (!id || !name || !email || !password) {
     return res.status(400).json({
@@ -16,7 +16,7 @@ const handleSignup = async (req, res, next) => {
   }
 
   try {
-    const findUser = await User.findOne({ loginId: id });
+    const findUser = await User.findOne({ loginId });
     if (findUser) {
       return res.status(400).json({
         success: false,
