@@ -3,8 +3,8 @@ const bcrypt = require("bcrypt");
 
 const handleSignup = async (req, res, next) => {
   const { loginId, name, email, password } = req.body;
-  console.log(id, name, email, password);
-  if (!id || !name || !email || !password) {
+  console.log(loginId, name, email, password);
+  if (!loginId || !name || !email || !password) {
     return res.status(400).json({
       success: false,
       status: 400,
@@ -29,7 +29,7 @@ const handleSignup = async (req, res, next) => {
 
     const user = await User.create({
       name,
-      loginId: id,
+      loginId,
       email,
       password: bcrypt.hashSync(password, 10),
     });

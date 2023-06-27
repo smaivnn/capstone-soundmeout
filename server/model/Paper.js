@@ -13,10 +13,18 @@ const paperSchema = new Schema(
       ref: "User",
       required: true,
     },
+    topic: {
+      type: Schema.Types.ObjectId,
+      ref: "Topic",
+      required: true,
+    },
     comment: {
       type: [Comment.schema],
     },
     visible: {
+      type: Boolean,
+    },
+    delete: {
       type: Boolean,
     },
   },

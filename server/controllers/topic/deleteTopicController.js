@@ -1,5 +1,6 @@
 const Topic = require("../../model/Topic");
 const User = require("../../model/User");
+
 const handleDeleteTopic = async (req, res) => {
   const { _id } = req.userInfo;
   const { topic_id } = req.params;

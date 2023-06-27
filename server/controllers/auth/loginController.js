@@ -4,9 +4,9 @@ const bcrypt = require("bcrypt");
 const { IssueToken } = require("./issueToken");
 
 const handleLogin = async (req, res, next) => {
-  const { id, password } = req.body;
+  const { loginId, password } = req.body;
 
-  if (!id || !password) {
+  if (!loginId || !password) {
     return res.status(400).json({
       success: false,
       status: 400,
@@ -17,7 +17,7 @@ const handleLogin = async (req, res, next) => {
   }
 
   try {
-    const findUser = await User.findOne({ loginId: id });
+    const findUser = await User.findOne({ loginId });
     if (!findUser) {
       return res.status(400).json({
         loginSuccess: false,
@@ -28,9 +28,39 @@ const handleLogin = async (req, res, next) => {
     }
     match = await bcrypt.compare(password, findUser.password);
     if (match) {
+      /**
       // token 발급
       const token = await IssueToken(findUser);
       findUser.refreshToken = token.refreshToken;
+       */
+      // generate accessToken
+      const accessToken = jwt.sign(
+        {
+          userInfo: {
+            _id: findUser._id,
+            loginId: findUser.loginId,
+            email: findUser.email,
+            name: findUser.name,
+            roles: findUser.roles,
+          },
+        },
+        process.env.ACCESS_TOKEN_SECRET,
+        {
+          expiresIn: "1h",
+          issuer: "soundmeout",
+        }
+      );
+
+      //generate refreshToken
+      const refreshToken = jwt.sign(
+        { _id: findUser.id },
+        process.env.REFRESH_TOKEN_SECRET,
+        {
+          expiresIn: "14d",
+          issuer: "soundmeout",
+        }
+      );
+      findUser.refreshToken = refreshToken;
       const result = await findUser.save();
 
       res.cookie("refreshToken", token.refreshToken, {
@@ -43,7 +73,8 @@ const handleLogin = async (req, res, next) => {
         status: 201,
         success: true,
         message: "성공적인 로그인",
-        access_token: token.accessToken,
+        // access_token: token.accessToken,
+        accessToken,
       });
     } else {
       return res.status(400).json({

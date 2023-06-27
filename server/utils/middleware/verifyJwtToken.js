@@ -15,7 +15,7 @@ const verifyToken = async (req, res, next) => {
         type: "Invalid access token",
       });
     }
-    req._id = decoded._id;
+    req.userInfo = decoded.userInfo;
     next();
   });
 };
