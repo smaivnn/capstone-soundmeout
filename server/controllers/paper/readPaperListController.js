@@ -2,7 +2,7 @@ const Paper = require("../../model/Paper");
 const User = require("../../model/User");
 
 const handlePaperList = async (req, res) => {
-  const { topic_id } = req.query;
+  const { topic_id } = req.params;
 
   if (!topic_id) {
     return res.status(400).json({
@@ -19,7 +19,7 @@ const handlePaperList = async (req, res) => {
       { topic: topic_id, visible: true, delete: false },
       { text: 1, comment: 1 }
     );
-    if (!foundPaper) {
+    if (!foundPaperList) {
       return res.status(400).json({
         status: 400,
         success: false,

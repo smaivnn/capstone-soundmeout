@@ -225,7 +225,7 @@ router.patch(`/delete`, verifyToken, deletePaperController.handleDeletePaper);
  *               $ref: '#/components/schemas/responseFailed'
  */
 router.put(
-  `/update/visible`,
+  `/visible`,
   verifyToken,
   updatePaperVisibleController.handlePaperVisible
 );
@@ -287,7 +287,7 @@ router.put(
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.get(`/read/:topic_id`, readPaperListController.handlePaperList);
+router.get(`/list/:topic_id`, readPaperListController.handlePaperList);
 
 /**
  * @swagger
@@ -346,5 +346,5 @@ router.get(`/read/:topic_id`, readPaperListController.handlePaperList);
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.get(`read/:paper_id`, readSinglePaperController.handleSinglePaper);
+router.get(`/:paper_id`, readSinglePaperController.handleSinglePaper);
 module.exports = router;

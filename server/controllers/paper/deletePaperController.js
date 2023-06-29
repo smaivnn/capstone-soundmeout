@@ -28,14 +28,13 @@ const handleDeletePaper = async (req, res) => {
       foundPaper.delete = true;
 
       foundPaper.save();
+      return res.status(200).json({
+        status: 200,
+        success: true,
+        message: "성공적인 조회",
+        redirectPath: redirectPath,
+      });
     }
-
-    return res.status(200).json({
-      status: 200,
-      success: true,
-      message: "성공적인 조회",
-      redirectPath: redirectPath,
-    });
   } catch (error) {
     res.status(500).json({
       success: false,

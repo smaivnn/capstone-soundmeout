@@ -14,7 +14,7 @@ const handleGetTopic = async (req, res) => {
     });
   }
   try {
-    const result = await Topic.findOne({ _id: topic_id, deleted: false });
+    const result = await Topic.findOne({ _id: topic_id, delete: false });
     if (!result) {
       return res.status(400).json({
         status: 400,

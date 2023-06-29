@@ -29,7 +29,7 @@ const handlePaperVisible = async (req, res) => {
       });
     }
 
-    foundPaer.visible = foundPaper.visible === false ? true : false;
+    foundPaper.visible = foundPaper.visible === false ? true : false;
     foundPaper.save();
 
     return res.status(200).json({

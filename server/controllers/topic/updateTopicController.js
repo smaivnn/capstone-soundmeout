@@ -14,7 +14,7 @@ const handleUpdateTopic = async (req, res) => {
     });
   }
   try {
-    const foundTopic = await Topic.findOne({ _id: topic_id, deleted: false });
+    const foundTopic = await Topic.findOne({ _id: topic_id, delete: false });
     foundTopic.visible = visible;
     const result = await foundTopic.save();
     res.status(200).json({

@@ -63,7 +63,7 @@ const handleLogin = async (req, res, next) => {
       findUser.refreshToken = refreshToken;
       const result = await findUser.save();
 
-      res.cookie("refreshToken", token.refreshToken, {
+      res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
         sameSite: "None",
         maxAge: 14 * 24 * 60 * 60 * 1000, // 14일

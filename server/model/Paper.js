@@ -23,9 +23,11 @@ const paperSchema = new Schema(
     },
     visible: {
       type: Boolean,
+      default: false,
     },
     delete: {
       type: Boolean,
+      default: false,
     },
   },
   {

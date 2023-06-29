@@ -25,9 +25,9 @@ const handleDeleteTopic = async (req, res) => {
         message: "인증권한이 없습니다.",
       });
     }
-    const foundTopic = await Topic.findOne({ _id: topic_id, deleted: false });
+    const foundTopic = await Topic.findOne({ _id: topic_id, delete: false });
     foundTopic.visible = false;
-    foundTopic.deleted = true;
+    foundTopic.delete = true;
     await foundTopic.save();
     res.status(200).json({
       status: 200,

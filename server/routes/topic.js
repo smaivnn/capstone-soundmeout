@@ -1,5 +1,8 @@
 const express = require("express");
 const router = express.Router();
+
+const { verifyToken } = require("../utils/middleware/verifyJwtToken");
+
 const createTopicController = require("../controllers/topic/createTopicController");
 const getTopicController = require("../controllers/topic/getTopicController");
 const deleteTopicController = require("../controllers/topic/deleteTopicController");
@@ -77,7 +80,7 @@ const updateTopicController = require("../controllers/topic/updateTopicControlle
  *               $ref: '#/components/schemas/responseFailed'
  *
  */
-router.post("/create", createTopicController.handleCreateTopic);
+router.post("/create", verifyToken, createTopicController.handleCreateTopic);
 
 /**
  * @swagger

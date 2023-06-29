@@ -3,6 +3,7 @@ const Topic = require("../../model/Topic");
 const handleCreateTopic = async (req, res) => {
   const { title } = req.body;
   const { _id } = req.userInfo; // *이부분 middleware가 있어야한다.
+
   if (!title || !_id) {
     return res.status(400).json({
       status: 400,

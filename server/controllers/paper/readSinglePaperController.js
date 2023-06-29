@@ -2,7 +2,7 @@ const Paper = require("../../model/Paper");
 const User = require("../../model/User");
 
 const handleSinglePaper = async (req, res) => {
-  const { paper_id } = req.query;
+  const { paper_id } = req.params;
   /**
    * 모두에게 공개되어도 됨.
    * 그냥 단일 페이퍼를 제공한다.

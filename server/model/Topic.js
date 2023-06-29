@@ -22,7 +22,7 @@ const topicSchema = new Schema(
       type: Boolean,
       default: true,
     },
-    deleted: {
+    delete: {
       type: Boolean,
       default: false,
     },
