@@ -2,11 +2,15 @@ const express = require("express");
 const router = express.Router();
 
 const { verifyToken } = require("../utils/middleware/verifyJwtToken");
+const {
+  verifyAndSendToken,
+} = require("../utils/middleware/getListVerifyJwtToken");
 
 const createTopicController = require("../controllers/topic/createTopicController");
 const getTopicController = require("../controllers/topic/getTopicController");
 const deleteTopicController = require("../controllers/topic/deleteTopicController");
 const updateTopicController = require("../controllers/topic/updateTopicController");
+const getTopicListController = require("../controllers/topic/getTopicListController");
 
 /**
  * @swagger
@@ -256,5 +260,11 @@ router.patch(`/update/:topic_id`, deleteTopicController.handleDeleteTopic);
  *               $ref: '#/components/schemas/responseFailed'
  */
 router.put(`/update/:topic_id`, updateTopicController.handleUpdateTopic);
+
+router.post(
+  `/list`,
+  verifyAndSendToken,
+  getTopicListController.handleTopicList
+);
 
 module.exports = router;

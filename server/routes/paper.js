@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const { verifyToken } = require("../utils/middleware/verifyJwtToken");
+const {verifyAndSendToken} =require("../utils/middleware/getListVerifyJwtToken")
 
 const createPaprtCotroller = require("../controllers/paper/createPaperController");
 const readPaperListController = require(`../controllers/paper/readPaperListController`);
@@ -287,7 +288,7 @@ router.put(
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.get(`/list/:topic_id`, readPaperListController.handlePaperList);
+router.post(`/list/:topic_id`,verifyAndSendToken, readPaperListController.handlePaperList);
 
 /**
  * @swagger

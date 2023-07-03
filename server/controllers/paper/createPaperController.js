@@ -38,6 +38,9 @@ const handleCreatePaper = async (req, res) => {
         visible: false,
       });
 
+      foundTopic.papers.push(newPaper._id);
+      await foundTopic.save();
+
       return res.status(200).json({
         status: 200,
         success: true,
