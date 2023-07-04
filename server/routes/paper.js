@@ -2,10 +2,12 @@ const express = require("express");
 const router = express.Router();
 
 const { verifyToken } = require("../utils/middleware/verifyJwtToken");
-const {verifyAndSendToken} =require("../utils/middleware/getListVerifyJwtToken")
+const {
+  verifyAndSendToken,
+} = require("../utils/middleware/getListVerifyJwtToken");
 
 const createPaprtCotroller = require("../controllers/paper/createPaperController");
-const readPaperListController = require(`../controllers/paper/readPaperListController`);
+const getPaperListController = require(`../controllers/paper/getPaperListController`);
 const readSinglePaperController = require(`../controllers/paper/readSinglePaperController`);
 const updatePaperVisibleController = require(`../controllers/paper/updatePaperVisibleController`);
 const deletePaperController = require(`../controllers/paper/deletePaperController`);
@@ -288,7 +290,11 @@ router.put(
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.post(`/list/:topic_id`,verifyAndSendToken, readPaperListController.handlePaperList);
+router.post(
+  `/list/:topic_id`,
+  verifyAndSendToken,
+  getPaperListController.handlePaperList
+);
 
 /**
  * @swagger
