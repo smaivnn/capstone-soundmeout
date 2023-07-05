@@ -4,10 +4,14 @@ const Schema = mongoose.Schema;
 const followSchema = new Schema(
   {
     followerId: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
     followingId: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
   },
   {
