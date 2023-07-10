@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
+const { verifyToken } = require(`../utils/middleware/verifyJwtToken`);
+
+const checkNotificationListController = require("../controllers/notification/checkNotificaionListController");
+
 /**
  * @swagger
  * /noti/create:
@@ -101,7 +105,11 @@ router.post("/create");
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.get(`/${user_id}`);
+router.get(
+  `/check`,
+  verifyToken,
+  checkNotificationListController.handleNotificationRead
+);
 
 /**
  * @swagger

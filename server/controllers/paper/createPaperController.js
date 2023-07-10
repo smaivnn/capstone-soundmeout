@@ -1,5 +1,6 @@
 const Paper = require("../../model/Paper");
 const Topic = require("../../model/Topic");
+const { saveNotification } = require(`../../utils/saveNotification`);
 
 const handleCreatePaper = async (req, res) => {
   const { _id } = req.userInfo;
@@ -40,6 +41,16 @@ const handleCreatePaper = async (req, res) => {
 
       foundTopic.papers.push(newPaper._id);
       await foundTopic.save();
+
+      const category = `paper`;
+      const senderId = _id;
+      const receiverId = foundTopic.author;
+      const result = await saveNotification(
+        redirectPath,
+        category,
+        senderId,
+        receiverId
+      );
 
       return res.status(200).json({
         status: 200,

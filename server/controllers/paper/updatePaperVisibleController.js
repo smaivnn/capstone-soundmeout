@@ -1,6 +1,8 @@
 const Paper = require("../../model/Paper");
 const User = require("../../model/User");
 
+const { saveNotification } = require("../../utils/saveNotification");
+
 const handlePaperVisible = async (req, res) => {
   const { _id } = req.userInfo;
   const { paper_id } = req.body;
@@ -31,6 +33,16 @@ const handlePaperVisible = async (req, res) => {
 
     foundPaper.visible = foundPaper.visible === false ? true : false;
     foundPaper.save();
+
+    const category = `paper`;
+    const senderId = _id;
+    const receiverId = foundPaper.author;
+    const result = await saveNotification(
+      redirectPath,
+      category,
+      senderId,
+      receiverId
+    );
 
     return res.status(200).json({
       status: 200,

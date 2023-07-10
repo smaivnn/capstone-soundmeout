@@ -9,8 +9,9 @@ const notificationSchema = new Schema(
     },
     receiverId: {
       type: String,
+      required: true,
     },
-    type: {
+    category: {
       type: String,
     },
     redirectURL: {
@@ -18,7 +19,9 @@ const notificationSchema = new Schema(
     },
     read: {
       type: Boolean,
+      default : false
     },
+  
   },
   {
     timestamps: true,

@@ -10,7 +10,7 @@ const User = require("../../model/User");
  * 클라이언트에서는 params로 topic의 Id와 body에 endPoint만 보내주면 됨.
  * searchUser 보낼 필요 X
  *
- * 추후에 중복 코드 리팩토링 예정
+ * 추후에 반환 내역, 유효처리 및 중복 코드 리팩토링 예정
  */
 
 // 프론트에서 토픽아이디랑 엑세스토큰, 엔드포인트 받고

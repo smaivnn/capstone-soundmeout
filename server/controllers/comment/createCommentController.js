@@ -1,5 +1,6 @@
 const Paper = require("../../model/Paper");
 const Comment = require("../../model/Comment");
+const { saveNotification } = require("../../utils/saveNotification");
 
 const handleCreateComment = async (req, res) => {
   const { _id } = req.userInfo;
@@ -39,6 +40,11 @@ const handleCreateComment = async (req, res) => {
     ]);
 
     foundPaper.comment.push(newPaper);
+
+    const category = `comment`;
+    const senderId = _id;
+    const receiverId = foundPaperPromise.author;
+    await saveNotification(redirectPath, category, senderId, receiverId);
 
     const result = Promise.all([newPaper.save(), foundPaper.save()]);
   } catch (error) {}
