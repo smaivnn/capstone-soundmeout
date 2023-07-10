@@ -1,0 +1,27 @@
+.button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  height: 60px;
+  width: 140px;
+  padding: 10px;
+  background-color: #202020;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transform: translateY(100%);
+  opacity: 0;
+  animation: slideUp 0.3s ease-in-out forwards;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

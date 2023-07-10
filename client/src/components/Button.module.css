@@ -1,0 +1,46 @@
+.button {
+  margin-top: 40px;
+  background-color: #202020;
+  width: 60%;
+  height: 70px;
+  border-radius: 5px;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-family: "TheJamsil5Bold", sans-serif;
+  color: white;
+}
+
+.button:hover {
+  background-color: #3e8e41;
+}
+
+.button_modal {
+  margin-top: 40px;
+  background-color: #202020;
+  width: 60%;
+  height: 70px;
+  border-radius: 5px;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-family: "TheJamsil5Bold", sans-serif;
+  color: white;
+}
+
+.button_modalSmall {
+  margin-top: 40px;
+  background-color: white;
+  width: 40%;
+  height: 50px;
+  border-radius: 5px;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-family: "TheJamsil5Bold", sans-serif;
+  color: #202020;
+}

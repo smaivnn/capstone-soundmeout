@@ -1,0 +1,70 @@
+@font-face {
+  font-family: "TheJamsil5Bold";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+.div {
+  margin-left: 15%;
+  font-size: 25px;
+  font-family: "TheJamsil5Bold", sans-serif;
+}
+.input {
+  border: 3px solid #202020;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+  height: 30px;
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.input_invalid {
+  border: 3px solid red;
+  background-color: #ff260098;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+  height: 30px;
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.input_addPost {
+  background-color: hsl(66, 95%, 47%);
+
+  font-size: 40px;
+  outline: none;
+  height: 500px;
+  width: 500px;
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-wrap: break-word;
+  font-family: "TheJamsil5Bold", sans-serif;
+  resize: none;
+}
+
+.input_showPaper {
+  font-size: 40px;
+  outline: none;
+  height: 500px;
+  width: 500px;
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-wrap: break-word;
+  font-family: "TheJamsil5Bold", sans-serif;
+  resize: none;
+}
+.input:focus {
+  border-color: #007bff;
+}

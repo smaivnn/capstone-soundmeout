@@ -1,0 +1,57 @@
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.modal {
+  background-color: #fff;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.modalHeader {
+  font-family: "TheJamsil5Bold", sans-serif;
+  color: black;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modalHeader h2 {
+  margin: 0;
+}
+
+.closeButton {
+  background-color: transparent;
+  border: none;
+  color: black;
+  font-size: 1.5rem;
+  cursor: pointer;
+  font-family: "TheJamsil5Bold", sans-serif;
+}
+.submitButton {
+  background-color: transparent;
+  border: 2px solid black;
+  margin-right: 0px;
+  border-radius: 5px;
+  color: black;
+  font-size: 1.5rem;
+  cursor: pointer;
+  font-family: "TheJamsil5Bold", sans-serif;
+  float: right;
+}
+
+.modalBody {
+  padding: 1rem;
+}
