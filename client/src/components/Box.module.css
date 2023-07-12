@@ -1,0 +1,10 @@
+.h1 {
+  font-family: "TheJamsil5Bold", sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  margin-left: 10%;
+  width: 80%;
+  padding: 0;
+  border: 3px solid #202020;
+}

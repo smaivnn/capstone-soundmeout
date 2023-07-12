@@ -1,0 +1,30 @@
+.scrollbar_container {
+  height: 30vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border: 2px solid black;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-left: 2%;
+  margin-right: 2%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.scrollbar_content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 20px;
+  padding: 20px;
+}
+.scrollbar_bigger {
+  height: 40vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border: 2px solid black;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-left: 2%;
+  margin-right: 2%;
+}
