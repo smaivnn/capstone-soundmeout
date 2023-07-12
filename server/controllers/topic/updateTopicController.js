@@ -21,6 +21,12 @@ const handleUpdateTopic = async (req, res) => {
       status: 200,
       success: true,
       message: "성공적인 토픽 수정",
+      // topicObject: {
+      //   topic_id: foundTopic._id,
+      //   title: foundTopic.title,
+      //   author: "익명",
+      //   paper: foundTopic.paper,
+      // },
     });
   } catch (error) {
     return res.status(500).json({
