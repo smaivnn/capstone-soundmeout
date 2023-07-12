@@ -11,6 +11,7 @@ const mailController = require("../controllers/auth/mailController");
 const refreshTokenController = require("../controllers/auth/refreshTokenController");
 const naverLoginController = require("../controllers/auth/naverLoginController");
 const naverLoginRedirectController = require("../controllers/auth/naverLoginRedirectController");
+const mailCallbackController = require("../controllers/auth/mailCallbackController");
 
 /**
  * @swagger
@@ -254,10 +255,15 @@ router.post(
   accountController.handleUpdatePassword
 );
 
+router.get(
+  "/find-password/callback",
+  mailCallbackController.handlePasswordMailCallback
+);
+
 /**
  * @swagger
  * /auth/find-password:
- *   get:
+ *   post:
  *     summary: 비밀번호 찾기
  *     description: body로 name,email 를 받아서 해당 유저의 이메일로 비밀번호 변경 링크를 보낸다.
  *     tags:
@@ -318,7 +324,7 @@ router.post(
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.get("/find-password", mailController.handlePasswordMail);
+router.post("/find-password", mailController.handlePasswordMail);
 
 router.post("/kakao", kakaoLoginController.handleKakaoLogin);
 
