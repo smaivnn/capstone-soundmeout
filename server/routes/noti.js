@@ -4,69 +4,7 @@ const router = express.Router();
 const { verifyToken } = require(`../utils/middleware/verifyJwtToken`);
 
 const checkNotificationListController = require("../controllers/notification/checkNotificaionListController");
-
-/**
- * @swagger
- * /noti/create:
- *   post:
- *     summary: 알람 생성
- *     description: header에 token, body에 reciever_id, type, redirectUrl를 보내어 새로운 알림을 생성한다.
- *     tags:
- *       - Noti
- *     parameters:
- *       - in: header
- *         name: Authorization
- *         description: Access token
- *         required: true
- *         schema:
- *           type: string
- *     requestBody:
- *        description: comment와 pulic여부를 body에 넣어주세요.
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *             type: object
- *             properties:
- *               reciever_id:
- *                 type: integer
- *                 example: 1
- *               type:
- *                type: string
- *                example: 'paper'
- *               redirectUrl:
- *                type: string
- *                example: 'http://www.naver.com'
- *             required:
- *               - reciever_id, type, redirectUrl
- *     responses:
- *       204:
- *         description: Ok
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/responseSuccess'
- *       400:
- *         description: Bad Request
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/responseFailed'
- *       401:
- *         description: Unauthorized
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/responseFailed'
- *       403:
- *         description: Forbidden
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/responseFailed'
- *
- */
-router.post("/create");
+const changeReadStatusController = require("../controllers/notification/changeReadStatusController");
 
 /**
  * @swagger
@@ -146,4 +84,4 @@ router.get(
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.patch(`/read/${noti_id}`);
+router.patch(`/read`, verifyToken, changeReadStatusController.handleReadStatus);
