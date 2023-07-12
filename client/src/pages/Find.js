@@ -80,22 +80,23 @@ const Find = () => {
             <div style={{ marginBottom: "20px" }}>
               <div>{user.name}</div>
               <div>{user.loginId}</div>
-            </div>
-            <div style={{ marginBottom: "20px" }}>
-              <button
-                _id={user.loginId}
-                className={styles.submitButton}
-                onClick={clickInfoHandler}
-              >
-                정보 보기
-              </button>{" "}
-              <button
-                _id={user._id}
-                className={styles.submitButton}
-                onClick={followClickHandler}
-              >
-                Follow
-              </button>
+
+              <div>
+                <button
+                  _id={user.loginId}
+                  className={styles.submitButton}
+                  onClick={clickInfoHandler}
+                >
+                  정보 보기
+                </button>
+                <button
+                  _id={user._id}
+                  className={styles.submitButton}
+                  onClick={followClickHandler}
+                >
+                  Follow
+                </button>
+              </div>
             </div>
           </Text>
         ))}

@@ -7,7 +7,9 @@ import Head1 from "./Head1";
 const MonoPaperModal = (props) => {
   const [text, setText] = useState("");
   const accessToken = useSelector((state) => state.accesstoken.accessToken);
+
   const visible = props.isvisible;
+
   console.log(visible);
   const handleChange = (event) => {
     const value = event.target.value;
@@ -52,6 +54,7 @@ const MonoPaperModal = (props) => {
       console.log(res);
       if (res.status === 200) {
         alert("페이퍼가 삭제되었습니다.");
+        window.location.reload();
       }
     } catch (error) {
       console.log(error);
@@ -76,11 +79,11 @@ const MonoPaperModal = (props) => {
           </div>
         </div>
         <div>
-          {visible === true ? null : <Head1>비공개 페이퍼입니다.</Head1>}
+          {visible === "true" ? null : <Head1>비공개 페이퍼입니다.</Head1>}
           <button className={styles.submitButton} onClick={deletePaperHandler}>
             삭제 하기!
           </button>
-          {visible === true ? (
+          {visible === "true" ? (
             <button
               className={styles.submitButton}
               onClick={updatePaperHandler}
