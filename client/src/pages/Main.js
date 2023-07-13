@@ -39,7 +39,7 @@ const Main = () => {
   }
   return (
     <div>
-      <Header useButton="true"></Header>
+      <Header useMenuButton="true" useNotiButton="true"></Header>
       {login ? (
         <div>
           <Routes>

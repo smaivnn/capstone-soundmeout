@@ -5,6 +5,7 @@ import noti from "../img/icons8-알림-30.png";
 import Modal from "./MenuModal";
 import styles from "./Header.module.css";
 import TopicMenuModal from "./TopicMenumodal";
+import NotiModal from "./NotiModal";
 
 const Header = (props) => {
   const [showMenuModal, setShowMenuModal] = useState(false);
@@ -31,7 +32,7 @@ const Header = (props) => {
 
   return (
     <div className={styles.container}>
-      {props.useButton ? (
+      {props.useMenuButton ? (
         <img
           className={styles.menuIcon}
           src={menu}
@@ -57,7 +58,7 @@ const Header = (props) => {
         }}
       />
 
-      {props.useButton ? (
+      {props.useNotiButton ? (
         <img
           className={styles.notificationIcon}
           src={noti}
@@ -75,11 +76,11 @@ const Header = (props) => {
         ></Modal>
       )}
       {showNotificationModal && (
-        <Modal
+        <NotiModal
           show={showNotificationModal}
           onClose={handleCloseModal}
           title="Notification"
-        ></Modal>
+        ></NotiModal>
       )}
       {showTopicMenuModal && (
         <TopicMenuModal

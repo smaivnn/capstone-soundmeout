@@ -1,0 +1,30 @@
+components:
+  schemas:
+    Noti:
+      type: object
+      properties:
+        noit_id:
+          type: integer
+          description: The notification Key id, Auto increase
+        sender_id:
+          type: intger
+          description: The user who send the notification
+        user_id:
+          type: object
+          description: The user who recieve the notification.
+        type:
+          type: string
+          description: Notification type
+        message:
+          type: string
+          description: The notification message
+        createdAt:
+          type: date
+          description: The date that user create noti.
+      example:
+        noti_id: 1
+        sender_id: 12
+        user_id: 123
+        type: "commnet"
+        message: "감자합니다."
+        createdAt: 2023-03-01 23:23:23

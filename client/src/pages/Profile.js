@@ -74,6 +74,9 @@ const Profile = () => {
         <div>게시물 : 3개</div>
         <div>받은 포스트잇 :34개</div>
       </Text>
+      <Button className={styleButton.button_modalSmall}>
+        팔로우 목록 확인!
+      </Button>
       <Head1>최근 게시한 글 </Head1>
       <Text className={styleText.frame_currentTopic}>
         <Thumbnail imageUrl={profile} title="Topic ex>1"></Thumbnail>
