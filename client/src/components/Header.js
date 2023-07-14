@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../img/logo.png";
 import menu from "../img/icons8-menu-rounded-50.png";
 import noti from "../img/icons8-알림-30.png";
+import isNoti from "../img/icons8-알림O-30.png";
 import Modal from "./MenuModal";
 import styles from "./Header.module.css";
 import TopicMenuModal from "./TopicMenumodal";
@@ -59,12 +60,21 @@ const Header = (props) => {
       />
 
       {props.useNotiButton ? (
-        <img
-          className={styles.notificationIcon}
-          src={noti}
-          alt="noti"
-          onClick={handleNotificationClick}
-        />
+        props.isNoti ? (
+          <img
+            className={styles.notificationIcon}
+            src={isNoti}
+            alt="noti"
+            onClick={handleNotificationClick}
+          />
+        ) : (
+          <img
+            className={styles.notificationIcon}
+            src={noti}
+            alt="noti"
+            onClick={handleNotificationClick}
+          />
+        )
       ) : (
         <div className={styles.placeholder} />
       )}

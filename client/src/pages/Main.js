@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Home from "./Home";
 import { Routes, Route } from "react-router-dom";
 import Header from "../components/Header";
@@ -14,6 +14,7 @@ import axios from "axios";
 
 const Main = () => {
   const login = useSelector((state) => state.login.isLoggedin);
+  const [noti, setNoti] = useState(false);
   const navigate = useNavigate();
   const accessToken = useSelector((state) => state.accesstoken.accessToken);
   const getNoti = async () => {
@@ -24,22 +25,22 @@ const Main = () => {
     });
     if (res.data.success) {
       if (res.data.notiArray.length > 0) {
-        alert("새로운 알림이 있습니다.");
-        console.log(res.data.notiArray);
+        setNoti(true);
+        console.log(res.data);
       }
     }
   };
   useEffect(() => {
     getNoti();
-  }, []);
-
+  }, [noti]);
+  console.log(noti, "noti");
   if (!login) {
     alert("로그인이 필요한 서비스입니다.");
     window.location.href = "/login";
   }
   return (
     <div>
-      <Header useMenuButton="true" useNotiButton="true"></Header>
+      <Header useMenuButton="true" useNotiButton="true" isNoti={noti}></Header>
       {login ? (
         <div>
           <Routes>

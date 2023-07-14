@@ -85,6 +85,7 @@ const Profile = () => {
       <Button className={styleButton.button} onClick={LogoutHandler}>
         로그아웃
       </Button>
+      <div style={{ marginBottom: "50px" }}></div>
     </div>
   );
 };
