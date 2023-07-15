@@ -85,3 +85,5 @@ router.get(
  *               $ref: '#/components/schemas/responseFailed'
  */
 router.patch(`/read`, verifyToken, changeReadStatusController.handleReadStatus);
+
+module.exports = router;
