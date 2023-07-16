@@ -34,6 +34,11 @@ const handlePasswordMail = async (req, res, next) => {
       code,
       usage: false,
     });
+    // 이메일 ASCII 코드로 변환 (naver.com이 문제 될 수 있어서)
+    const encodedEmail = [...email].reduce((acc, cur) => {
+      return acc + `%${cur.charCodeAt(0).toString(16)}`;
+    }, "");
+    console.log(encodedEmail);
     const mailOptions = {
       from: process.env.EMAIL,
       to: email,
@@ -49,7 +54,7 @@ const handlePasswordMail = async (req, res, next) => {
         <body>
             <link>
             <div>비밀번호 변경을 위해 아래 버튼을 클릭해주세요</div>
-            <button><a href="http://localhost:3500/auth/find-password/callback?email=${email}&code=${code}">비밀번호 변경</a></button>
+            <button><a href="http://localhost:3500/auth/find-password/callback?email=${encodedEmail}&code=${code}">비밀번호 변경</a></button>
         </body>
         </html>`,
     };
