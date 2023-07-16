@@ -4,7 +4,6 @@ const User = require("../../model/User");
 const handleCreateFollow = async (req, res) => {
   const { _id } = req.userInfo;
   const followingId = req.params.user_id;
-  console.log(followingId);
   if (!_id || !followingId) {
     return res.status(400).json({
       status: 400,
@@ -17,11 +16,10 @@ const handleCreateFollow = async (req, res) => {
 
   try {
     // user_id가 존재하는지 확인
-
     const foundUser = User.findOne({ _id: followingId });
     if (!foundUser) {
-      return res.status(400).json({
-        status: 400,
+      return res.status(404).json({
+        status: 404,
         success: false,
         source: "createFollowController.js/handleCreateFollow",
         type: "Follow 생성 실패",

@@ -59,9 +59,9 @@ const handleFollowerList = async (req, res) => {
       followingId: _id,
     }).populate("followerId", "name");
     // [{_id,name},...} 형식으로 변경
-    console.log(result);
     const transformedResult = result.map((item) => ({
       _id: item.followerId._id,
+      loginId: item.followerId.loginId,
       name: item.followerId.name,
     }));
     return res.status(200).json({
