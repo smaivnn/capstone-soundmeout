@@ -21,6 +21,7 @@ const handleFollowingList = async (req, res) => {
     const transformedResult = result.map((item) => ({
       _id: item.followingId._id,
       name: item.followingId.name,
+      loginId: item.followingId.loginId,
     }));
     return res.status(200).json({
       status: 200,
