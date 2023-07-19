@@ -17,6 +17,10 @@ const Posting = () => {
   };
 
   const handleSubmit = async () => {
+    if (!title) {
+      alert("제목을 입력해주세요.");
+      return;
+    }
     const res = await axios.post(
       "http://localhost:3500/topic/create",
       {

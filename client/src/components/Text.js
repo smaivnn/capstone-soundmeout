@@ -1,6 +1,6 @@
 import React from "react";
 
-const User = (props) => {
+const Text = (props) => {
   return (
     <div className={props.className}>
       {React.Children.map(props.children, (child) => {
@@ -10,4 +10,4 @@ const User = (props) => {
   );
 };
 
-export default User;
+export default Text;

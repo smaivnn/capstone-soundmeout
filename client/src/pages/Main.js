@@ -8,7 +8,6 @@ import Find from "./Find";
 import Profile from "./Profile";
 import ChangePw from "./ChangePw";
 import { useNavigate } from "react-router-dom";
-import GetTopicList from "../components/GetTopicList";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
@@ -44,14 +43,13 @@ const Main = () => {
       {login ? (
         <div>
           <Routes>
-            <Route path="/" element={<GetTopicList />} />
+            <Route path="/" element={<Home />} />
             <Route path="/posting" element={<Posting />} />
             <Route path="/find" element={<Find />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/home" element={<GetTopicList />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/changepassword" element={<ChangePw />} />
             <Route path="/deleteaccount" element={<ChangePw />} />
-            <Route path="/test" element={<GetTopicList />} />
           </Routes>
         </div>
       ) : (

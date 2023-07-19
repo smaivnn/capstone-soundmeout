@@ -1,0 +1,38 @@
+components:
+  schemas:
+    responseSuccess:
+      type: object
+      required: status
+        success
+        message
+      properties:
+        status:
+          type: integer
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+    responseFailed:
+      type: object
+      required: status
+        success
+        source
+        type
+        message
+      properties:
+        status:
+          type: integer
+        success:
+          type: boolean
+          example: false
+        source:
+          type: string
+          example: controller.js/handler(func)
+          description: 오류가 발생한 controller.js/handler(func)
+        type:
+          type: string
+          example: <기능> 실패
+          description: 오류의 종류
+        message:
+          type: string

@@ -9,37 +9,25 @@ const InfoModal = (props) => {
   const [endPoint, setEndPoint] = useState();
   const [topicArray, setTopicArray] = useState([]);
   const accessToken = useSelector((state) => state.accesstoken.accessToken);
-  console.log("accessToken", accessToken);
+
+  console.log(props.userId);
   const getUserProfile = async () => {
     try {
-      console.log("getUserProfile");
-      console.log(props.userId);
       const res = await axios.get(
         `http://localhost:3500/user/profile/${props.userId}`
       );
-      if (res.data.topicArray.length === 0) {
-        return;
-      } else {
-        setTopicArray((prevArray) => [...prevArray, ...res.data.topicArray]);
-        const lastIndex = res.data.topicArray.length - 1;
-        setEndPoint(res.data.topicArray[lastIndex]._id);
-        console.log(endPoint);
-      }
+      setLoginId(res.data.userObject.loginId);
+      setName(res.data.userObject.name);
     } catch (error) {
       console.log(error);
     }
   };
 
   const getUserTopic = async () => {
+    console.log("getUserTopic");
     try {
-      const res = await axios.post(
-        `http://localhost:3500/topic/list`,
-        { searchUser: props.userId, endPoint: endPoint },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
+      const res = await axios.get(
+        `http://localhost:3500/user/topic/${props.userId}`
       );
       console.log(res.data);
     } catch (error) {
@@ -61,8 +49,8 @@ const InfoModal = (props) => {
           </button>
         </div>
         <div className={styles.modalInfoBody}>
-          <div>{name}님</div>
-          <div>로그인한 ID : {loginId}</div>
+          <div style={{ marginBottom: "5px" }}>{name}님</div>
+          <div style={{ marginBottom: "5px" }}>로그인한 ID : {loginId}</div>
           <div>작성한 토픽 :</div>
           <div>팔로워 수 : </div>
         </div>

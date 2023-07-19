@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Head1 from "../components/Head1";
+import styleHead from "../components/Head1.module.css";
 import PostItList from "../components/PostItList";
 import axios from "axios";
 import styleButton from "../components/AddPostIt.module.css";
@@ -170,7 +171,9 @@ const Topic = (props) => {
           useTopicMenuButton="true"
           topicId={topicId}
         ></Header>
-        {visible ? null : <div>비공개 토픽입니다.</div>}
+        {visible ? null : (
+          <Head1 className={styleHead.h2}>비공개 토픽입니다.</Head1>
+        )}
         {showAddPostIt ? (
           <PostItModal
             onTextChange={handleTextValue}
@@ -178,7 +181,7 @@ const Topic = (props) => {
             onClick={postItSubmitButton}
           ></PostItModal>
         ) : null}
-        <Head1>{topicTitle}</Head1>
+        <Head1 className={styleHead.h1}>{topicTitle}</Head1>
         {showButton ? (
           <button
             className={styleButton.button}
