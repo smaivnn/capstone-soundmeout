@@ -1,7 +1,8 @@
 const nodeMailer = require("nodemailer");
 const User = require("../../model/User");
 const jwt = require("jsonwebtoken");
-
+const trasnporter = require("../../config/mail");
+const Auth = require("../../model/Auth");
 const handleVerifyMail = async (req, res, next) => {};
 
 const handlePasswordMail = async (req, res, next) => {
@@ -26,26 +27,18 @@ const handlePasswordMail = async (req, res, next) => {
         message: "User not found.",
       });
     }
-    // 임시 토큰 발행
-    const accessToken = jwt.sign(
-      { _id: findUser._id },
-      process.env.ACCESS_TOKEN_SECRET,
-      {
-        expiresIn: "3m",
-      }
-    );
-
-    const trasnporter = nodeMailer.createTransport({
-      service: "gmail",
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD,
-      },
+    // 임시 코드 발행
+    const code = Math.random().toString(36).slice(2);
+    const newAuth = await Auth.create({
+      email,
+      code,
+      usage: false,
     });
-
+    // 이메일 ASCII 코드로 변환 (naver.com이 문제 될 수 있어서)
+    const encodedEmail = [...email].reduce((acc, cur) => {
+      return acc + `%${cur.charCodeAt(0).toString(16)}`;
+    }, "");
+    console.log(encodedEmail);
     const mailOptions = {
       from: process.env.EMAIL,
       to: email,
@@ -59,15 +52,10 @@ const handlePasswordMail = async (req, res, next) => {
             <title>Document</title>
         </head>
         <body>
+            <link>
             <div>비밀번호 변경을 위해 아래 버튼을 클릭해주세요</div>
-            <button id="password">비밀번호 변경</button>
+            <button><a href="http://localhost:3500/auth/find-password/callback?email=${encodedEmail}&code=${code}">비밀번호 변경</a></button>
         </body>
-        <script>
-          const pw=document.getElementById("password");
-          pw.addEventListener("click",()=>{
-            
-          })
-        </script>
         </html>`,
     };
     const info = await trasnporter.sendMail(mailOptions);
