@@ -100,6 +100,9 @@ const Topic = (props) => {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
+        },
+        {
+          withCredentials: true,
         }
       );
       console.log(res);

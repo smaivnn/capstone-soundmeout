@@ -23,7 +23,14 @@ export const login = (id, password) => async (dispatch) => {
     };
     console.log("fetching,,,");
     console.log(data);
-    const res = await axios.post("http://localhost:3500/auth/login", data);
+    const res = await axios.post(
+      "http://localhost:3500/auth/login",
+
+      data,
+      {
+        withCredentials: true,
+      }
+    );
     dispatch(loginSuccess());
     console.log("login res");
     console.log(res);
