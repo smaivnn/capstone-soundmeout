@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../img/logo.png";
 import menu from "../img/icons8-menu-rounded-50.png";
 import noti from "../img/icons8-알림-30.png";
+import isNoti from "../img/icons8-알림O-30.png";
 import Modal from "./MenuModal";
 import styles from "./Header.module.css";
 import TopicMenuModal from "./TopicMenumodal";
+import NotiModal from "./NotiModal";
 
 const Header = (props) => {
   const [showMenuModal, setShowMenuModal] = useState(false);
@@ -31,7 +33,7 @@ const Header = (props) => {
 
   return (
     <div className={styles.container}>
-      {props.useButton ? (
+      {props.useMenuButton ? (
         <img
           className={styles.menuIcon}
           src={menu}
@@ -57,13 +59,22 @@ const Header = (props) => {
         }}
       />
 
-      {props.useButton ? (
-        <img
-          className={styles.notificationIcon}
-          src={noti}
-          alt="noti"
-          onClick={handleNotificationClick}
-        />
+      {props.useNotiButton ? (
+        props.isNoti ? (
+          <img
+            className={styles.notificationIcon}
+            src={isNoti}
+            alt="noti"
+            onClick={handleNotificationClick}
+          />
+        ) : (
+          <img
+            className={styles.notificationIcon}
+            src={noti}
+            alt="noti"
+            onClick={handleNotificationClick}
+          />
+        )
       ) : (
         <div className={styles.placeholder} />
       )}
@@ -75,11 +86,11 @@ const Header = (props) => {
         ></Modal>
       )}
       {showNotificationModal && (
-        <Modal
+        <NotiModal
           show={showNotificationModal}
           onClose={handleCloseModal}
           title="Notification"
-        ></Modal>
+        ></NotiModal>
       )}
       {showTopicMenuModal && (
         <TopicMenuModal

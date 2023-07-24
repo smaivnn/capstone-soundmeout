@@ -29,31 +29,46 @@ const Login = () => {
   };
 
   const handleSubmit = async () => {
-    const res = await dispatch(login(id, password));
+    try {
+      const res = await dispatch(login(id, password));
 
-    console.log(res.data);
-    if (
-      !store.getState().login.loading &&
-      store.getState().login.error === null &&
-      res
-    ) {
-      dispatch(setAccessToken(res.data.accessToken));
-      const decode = jwt_decode(res.data.accessToken);
-      console.log("decode");
-      console.log(decode.userInfo);
+      console.log(res.data);
+      if (
+        !store.getState().login.loading &&
+        store.getState().login.error === null &&
+        res &&
+        id &&
+        password
+      ) {
+        dispatch(setAccessToken(res.data.accessToken));
+        const decode = jwt_decode(res.data.accessToken);
+        console.log("decode");
+        console.log(decode.userInfo);
 
-      /* 디코딩된 액세스토큰의 정보 저장*/
-      dispatch(
-        setUser(
-          decode.userInfo.email,
-          decode.userInfo.loginId,
-          decode.userInfo.name
-        )
-      );
-
-      navigate("/main");
-    } else {
-      alert("로그인에 실패했습니다. 입력한 정보를 다시 확인해주세요.");
+        /* 디코딩된 액세스토큰의 정보 저장*/
+        dispatch(
+          setUser(
+            decode.userInfo.email,
+            decode.userInfo.loginId,
+            decode.userInfo.name
+          )
+        );
+        console.log(res.status);
+        navigate("/main");
+      }
+    } catch (error) {
+      if (error.response) {
+        // The request was made, but the server responded with an error status code
+        alert(error.response.data); // Set the server error message to the state
+      } else if (error.request) {
+        // The request was made but no response was received (e.g., network error)
+        alert("Network Error");
+      } else if (!id || !password) {
+        alert("아이디와 비밀번호를 입력해주세요.");
+      } else {
+        // Something else happened while setting up the request
+        alert("일치하지 않는 정보입니다.");
+      }
     }
   };
 

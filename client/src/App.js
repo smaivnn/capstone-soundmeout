@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route ,useParams} from "react-router-dom";
+import { Routes, Route, useParams } from "react-router-dom";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Starting from "./pages/Starting";
@@ -16,7 +16,6 @@ function App() {
         <Route path="/main/*" element={<Main />} />
         <Route path="/auth/*" element={<Auth />} />
         <Route path="/topic/:id" element={<TopicWrapper />} />
-        
       </Routes>
     </div>
   );

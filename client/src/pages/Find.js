@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Head1 from "../components/Head1";
+import HeadStyle from "../components/Head1.module.css";
+
 import Input from "../components/Input";
 import styleInput from "../components/Input.module.css";
 import Scrollbar from "../components/Scrollbar";
@@ -23,12 +25,16 @@ const Find = () => {
   };
 
   const clickInfoHandler = (event) => {
-    const id = event.currentTarget.getAttribute("_id");
+    const id = event.currentTarget.getAttribute("loginId");
     setShowInfoModal(true);
     setUserId(id);
   };
 
   const getUserInfo = async () => {
+    if (!searchId) {
+      alert("검색할 ID를 입력해주세요.");
+      return;
+    }
     try {
       const res = await axios.post(
         `http://localhost:3500/user/search/${searchId}`
@@ -55,13 +61,14 @@ const Find = () => {
       );
       console.log(res.data);
     } catch (error) {
-      console.log(error);
+      console.log(error.response.status);
+      //status 코드에 따른 핸들링
     }
   };
 
   return (
     <div>
-      <Head1>친구 찾기</Head1>
+      <Head1 className={HeadStyle.h1}>친구 찾기</Head1>
       <div style={{ marginBottom: "30px" }}></div>
       <Input
         className={styleInput.input}
@@ -73,29 +80,30 @@ const Find = () => {
       <Button onClick={getUserInfo} className={styleButton.button_modalSmall}>
         검색
       </Button>
-      <Head1>검색 결과</Head1>
+      <Head1 className={HeadStyle.h1}>검색 결과</Head1>
       <Scrollbar className={styleScrollbar.scrollbar_bigger}>
         {userArray.map((user) => (
           <Text key={user._id} className={styleText.frame}>
             <div style={{ marginBottom: "20px" }}>
               <div>{user.name}</div>
               <div>{user.loginId}</div>
-            </div>
-            <div style={{ marginBottom: "20px" }}>
-              <button
-                _id={user.loginId}
-                className={styles.submitButton}
-                onClick={clickInfoHandler}
-              >
-                정보 보기
-              </button>{" "}
-              <button
-                _id={user._id}
-                className={styles.submitButton}
-                onClick={followClickHandler}
-              >
-                Follow
-              </button>
+
+              <div>
+                <button
+                  loginId={user.loginId}
+                  className={styles.submitButton}
+                  onClick={clickInfoHandler}
+                >
+                  정보 보기
+                </button>
+                <button
+                  _id={user._id}
+                  className={styles.submitButton}
+                  onClick={followClickHandler}
+                >
+                  Follow
+                </button>
+              </div>
             </div>
           </Text>
         ))}
