@@ -36,5 +36,6 @@ app.use("/topic", require("./routes/topic"));
 app.use("/paper", require("./routes/paper"));
 app.use("/notification", require("./routes/noti"));
 app.use("/follow", require("./routes/follow"));
+app.use("/user", require("./routes/user"));
 
 app.listen(PORT, () => logger.info(`Server running on port ${PORT}`));

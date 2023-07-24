@@ -2,10 +2,9 @@ const User = require("../../model/User");
 const Topic = require("../../model/Topic");
 
 const handleTopicList = async (req, res) => {
-  const { searchUser, endPoint } = req.body;
+  const { searchUser, endPoint, offset } = req.body;
   const userInfo = req?.userInfo;
 
-  let offset = 6;
   let topicArray;
 
   const [foundUser, foundEndPoint] = await Promise.all([

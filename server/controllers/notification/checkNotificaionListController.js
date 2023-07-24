@@ -16,6 +16,7 @@ const handleNotificationRead = async (req, res) => {
     if (count > 0) {
       const foundNoti = await Notification.find({
         receiverId: userInfo._id,
+        redirectURL,
         read: false,
       });
 
@@ -35,7 +36,7 @@ const handleNotificationRead = async (req, res) => {
       source: "checkNotificationListController.js/handleNotificationRead",
       type: "server error",
       message: `Internal server error`,
-    })
+    });
   }
 };
 

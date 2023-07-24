@@ -16,10 +16,9 @@ const User = require("../../model/User");
 // 프론트에서 토픽아이디랑 엑세스토큰, 엔드포인트 받고
 const handlePaperList = async (req, res) => {
   const { topic_id } = req.params;
-  const { endPoint } = req.body;
+  const { endPoint, offset } = req.body;
   const userInfo = req?.userInfo;
 
-  let offset = 6;
   let paperArray;
 
   const foundTopic = await Topic.findOne({ _id: topic_id });

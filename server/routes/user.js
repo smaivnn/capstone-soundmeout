@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
+const {verifyToken} = require(`../utils/middleware/verifyJwtToken`)
+
 const getUserProfileController = require("../controllers/user/getUserProfileController");
 const getUserTopicController = require("../controllers/user/getUserTopicController");
 const getUserPaperController = require("../controllers/user/getUserPaperController");
@@ -154,7 +156,7 @@ router.get(`/topic/:loginId`, getUserTopicController.handleUserTopic);
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.get(`/paper/:loginId`, getUserPaperController.handleUserPaper);
+router.get(`/paper/:userId`,verifyToken, getUserPaperController.handleUserPaper);
 
 /**
  * @swagger
