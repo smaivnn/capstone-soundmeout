@@ -128,7 +128,7 @@ router.post("/create", verifyToken, createTopicController.handleCreateTopic);
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.get(`/:topic_id`, getTopicController.handleGetTopic);
+router.get(`/:topic_id`, verifyAndSendToken, getTopicController.handleGetTopic);
 
 /**
  * @swagger
@@ -177,7 +177,11 @@ router.get(`/:topic_id`, getTopicController.handleGetTopic);
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.patch(`/update/:topic_id`, deleteTopicController.handleDeleteTopic);
+router.patch(
+  `/delete/:topic_id`,
+  verifyToken,
+  deleteTopicController.handleDeleteTopic
+);
 
 /**
  * @swagger

@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import styles from "./Modal.module.css";
 import Button from "./Button";
+import onCheck from "../img/icons8-on-50.png";
+import offCheck from "../img/icons8-off-50.png";
 import styleButton from "./Button.module.css";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import Head1 from "./Head1";
+import styleHead from "./Head1.module.css";
 const TopicMenuModal = (props) => {
   const accessToken = useSelector((state) => state.accesstoken.accessToken);
   const [showUpdate, setShowUpdate] = useState(false);
@@ -57,12 +60,22 @@ const TopicMenuModal = (props) => {
             <div>
               {showUpdate && (
                 <div>
-                  <div>토픽 공개</div>
-                  <input
-                    type="checkbox"
-                    onChange={setVisibleTopic}
-                    checked={checked}
-                  ></input>
+                  <Head1 className={styleHead.h2}>토픽 비공개</Head1>
+                  {checked ? (
+                    <img
+                      src={onCheck}
+                      onClick={setVisibleTopic}
+                      style={{ margin: "auto", display: "block" }}
+                      alt="onButton"
+                    ></img>
+                  ) : (
+                    <img
+                      src={offCheck}
+                      onClick={setVisibleTopic}
+                      style={{ margin: "auto", display: "block" }}
+                      alt="offButton"
+                    ></img>
+                  )}
                 </div>
               )}
             </div>

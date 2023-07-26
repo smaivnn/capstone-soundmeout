@@ -2,6 +2,7 @@ const Paper = require("../../model/Paper");
 const User = require("../../model/User");
 
 const handleDeletePaper = async (req, res) => {
+  console.log("deletePaperHandler");
   const { _id, loginId, email, name, roles } = req.userInfo;
   const { paper_id, redirectPath } = req.body;
   /**
@@ -19,6 +20,7 @@ const handleDeletePaper = async (req, res) => {
   }
   try {
     const foundUser = await User.findOne({ _id }); // 로그인 유저 정보
+    console.log(foundUser);
     const logedInUserRefreshToken = req.cookies.refreshToken; // cookie의 리프래시토큰
 
     if (foundUser.refreshToken === logedInUserRefreshToken) {
@@ -34,6 +36,8 @@ const handleDeletePaper = async (req, res) => {
         message: "성공적인 조회",
         redirectPath: redirectPath,
       });
+    } else {
+      console.log("인증권한이 없습니다.");
     }
   } catch (error) {
     res.status(500).json({

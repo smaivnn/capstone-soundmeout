@@ -1,6 +1,5 @@
 const Topic = require("../../model/Topic");
 const handleUpdateTopic = async (req, res) => {
-  req.userInfo = { _id: "64732750f627afffdbce28f8" }; //test
   const { _id } = req.userInfo;
   const { topic_id } = req.params;
   const { visible } = req.body;

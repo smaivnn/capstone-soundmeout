@@ -2,6 +2,7 @@ const Topic = require("../../model/Topic");
 
 const handleGetTopic = async (req, res) => {
   const { topic_id } = req.params;
+
   const { _id } = req.userInfo;
 
   if (!topic_id) {

@@ -16,6 +16,7 @@ const handleDeleteTopic = async (req, res) => {
   try {
     const foundUser = await User.findOne({ _id });
     const logedInUserRefreshToken = req.cookies.refreshToken;
+    console.log(logedInUserRefreshToken);
     if (foundUser.refreshToken.toString() !== logedInUserRefreshToken) {
       return res.status(400).json({
         status: 400,
@@ -35,6 +36,7 @@ const handleDeleteTopic = async (req, res) => {
       message: "성공적인 토픽 삭제",
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       status: 500,
       success: false,

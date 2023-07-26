@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Head1 from "../components/Head1";
+import styleHead from "../components/Head1.module.css";
 import PostItList from "../components/PostItList";
 import axios from "axios";
 import styleButton from "../components/AddPostIt.module.css";
@@ -68,24 +69,32 @@ const Topic = (props) => {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-        setVisible(res.data.result.visible);
-        setTopicTitle(res.data.result.title);
-        console.log("토픽 비저블 상태", res.data.result.visible, visible);
+        if (res.status === 200) {
+          setVisible(res.data.result.visible);
+          setTopicTitle(res.data.result.title);
+          console.log("토픽 비저블 상태", res.data.result.visible, visible);
+          setVisible(visible);
+          if (inView) {
+            getPaper();
+          }
+        } else {
+          alert("권한이 없습니다.");
+        }
       } catch (error) {
-        alert("존재하지 않는 토픽입니다.");
+        alert("존재하지 않거나 비공개된 토픽입니다.");
         window.history.back();
       }
     };
 
     getTopic();
-  }, [visible]);
+  }, [visible, inView, paperArray]);
 
-  useEffect(() => {
-    setVisible(visible);
-    if (inView) {
-      getPaper();
-    }
-  }, [inView, paperArray]);
+  // useEffect(() => {
+  //   setVisible(visible);
+  //   if (inView) {
+  //     getPaper();
+  //   }
+  // }, [inView, paperArray]);
   //토픽 삭제
   const deleteTopic = async () => {
     console.log("deleteTopic");
@@ -99,6 +108,9 @@ const Topic = (props) => {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
+        },
+        {
+          withCredentials: true,
         }
       );
       console.log(res);
@@ -170,7 +182,9 @@ const Topic = (props) => {
           useTopicMenuButton="true"
           topicId={topicId}
         ></Header>
-        {visible ? null : <div>비공개 토픽입니다.</div>}
+        {visible ? null : (
+          <Head1 className={styleHead.h2}>비공개 토픽입니다.</Head1>
+        )}
         {showAddPostIt ? (
           <PostItModal
             onTextChange={handleTextValue}
@@ -178,7 +192,7 @@ const Topic = (props) => {
             onClick={postItSubmitButton}
           ></PostItModal>
         ) : null}
-        <Head1>{topicTitle}</Head1>
+        <Head1 className={styleHead.h1}>{topicTitle}</Head1>
         {showButton ? (
           <button
             className={styleButton.button}

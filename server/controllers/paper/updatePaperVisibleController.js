@@ -6,6 +6,7 @@ const { saveNotification } = require("../../utils/saveNotification");
 const handlePaperVisible = async (req, res) => {
   const { _id } = req.userInfo;
   const { paper_id } = req.body;
+
   /**
    * 모두에게 공개되어도 됨.
    * 그냥 단일 페이퍼를 제공한다.
@@ -37,12 +38,7 @@ const handlePaperVisible = async (req, res) => {
     const category = `paper`;
     const senderId = _id;
     const receiverId = foundPaper.author;
-    const result = await saveNotification(
-      redirectPath,
-      category,
-      senderId,
-      receiverId
-    );
+    const result = await saveNotification(category, senderId, receiverId);
 
     return res.status(200).json({
       status: 200,
@@ -50,6 +46,7 @@ const handlePaperVisible = async (req, res) => {
       message: "성공적인 조회",
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       success: false,
       status: 500,
