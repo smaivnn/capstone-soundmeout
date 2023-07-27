@@ -11,7 +11,7 @@ import styleScrollbar from "../components/Scrollbar.module.css";
 import { useDispatch } from "react-redux";
 import { setAccessToken } from "../modules/accesstoken";
 import { setUser } from "../modules/user";
-import { oauthLogin } from "../modules/login";
+import { logout } from "../modules/login";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -83,7 +83,7 @@ const Profile = () => {
   const LogoutHandler = () => {
     dispatch(setAccessToken(""));
     dispatch(setUser("", "", ""));
-    dispatch(oauthLogin(false));
+    dispatch(logout());
     alert("로그아웃 되었습니다.");
     navigate("/main");
   };

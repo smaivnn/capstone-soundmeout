@@ -16,6 +16,7 @@ const Home = () => {
   const accessToken = useSelector((state) => state.accesstoken.accessToken);
   const [endPoint, setEndPoint] = useState();
   const [topicArray, setTopicArray] = useState([]);
+  const [paperArray, setPaperArray] = useState([]);
   const navigate = useNavigate();
   const [ref, inView] = useInView({
     threshold: 0,
@@ -58,9 +59,14 @@ const Home = () => {
   const getMyPaper = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:3500/user/paper/${loginId}`
+        `http://localhost:3500/user/paper/${loginId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
       );
-      console.log(res.data);
+      setPaperArray(res.data.paperArray);
     } catch (error) {
       console.log(error);
     }
@@ -102,7 +108,19 @@ const Home = () => {
         </div>
       </Scrollbar>
       <Head1 className={styleHead.h1}>내가 작성한 페이퍼</Head1>
-      <Scrollbar className={styleScrollbar.scrollbar_container}></Scrollbar>
+      <Scrollbar className={styleScrollbar.scrollbar_container}>
+        {paperArray.map((paper) => (
+          <TopicBox
+            className={styleTopicBox.frame}
+            key={paper._id}
+            _id={paper._id}
+            title={paper.text}
+            onClick={(event) => ThumbnailClickHandler(event, paper._id)}
+            imageUrl={profile}
+            date={paper.createdAt}
+          />
+        ))}
+      </Scrollbar>
     </div>
   );
 };

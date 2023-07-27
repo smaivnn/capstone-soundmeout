@@ -14,7 +14,7 @@ const InfoModal = (props) => {
   const getUserProfile = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:3500/user/profile/${props.userId}`
+        `http://localhost:3500/user/profile/${props.loginId}`
       );
       console.log(res.data.userObject);
       setLoginId(res.data.userObject.loginId);
@@ -24,20 +24,20 @@ const InfoModal = (props) => {
     }
   };
 
-  const getUserTopic = async () => {
-    console.log("getUserTopic");
-    try {
-      const res = await axios.get(
-        `http://localhost:3500/topic/${props.userId}`
-      );
-      console.log(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getUserTopic = async () => {
+  //   console.log("getUserTopic");
+  //   try {
+  //     const res = await axios.get(
+  //       `http://localhost:3500/topic/${props.userId}`
+  //     );
+  //     console.log(res.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   useEffect(() => {
     getUserProfile();
-    getUserTopic();
+    // getUserTopic();
   }, []);
 
   return (

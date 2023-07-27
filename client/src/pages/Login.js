@@ -10,7 +10,7 @@ import styleInput from "../components/Input.module.css";
 import GoogleLogin from "./login/GoogleLogin";
 import NaverLogin from "./login/NaverLogin";
 import { useDispatch } from "react-redux";
-import { login } from "../modules/login";
+import { localLogin, login, oauthLogin } from "../modules/login";
 import { setAccessToken } from "../modules/accesstoken";
 import { setUser } from "../modules/user";
 import jwt_decode from "jwt-decode";
@@ -53,6 +53,7 @@ const Login = () => {
             decode.userInfo.name
           )
         );
+        dispatch(localLogin(true));
         console.log(res.status);
         navigate("/main");
       }
