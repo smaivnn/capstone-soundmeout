@@ -16,7 +16,6 @@ const Main = () => {
   const [noti, setNoti] = useState(false);
   const navigate = useNavigate();
   const accessToken = useSelector((state) => state.accesstoken.accessToken);
-  console.log(accessToken, "accessToken");
   const getNoti = async () => {
     const res = await axios.get("http://localhost:3500/notification/check", {
       headers: {

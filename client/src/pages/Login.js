@@ -53,7 +53,10 @@ const Login = () => {
             decode.userInfo.name
           )
         );
+<<<<<<< HEAD
         dispatch(localLogin(true));
+=======
+>>>>>>> f502259d6be0a0449ab8bdfc3ef37a5467559939
         console.log(res.status);
         navigate("/main");
       }
