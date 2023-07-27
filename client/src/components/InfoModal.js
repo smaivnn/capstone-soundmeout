@@ -16,10 +16,8 @@ const InfoModal = (props) => {
       const res = await axios.get(
         `http://localhost:3500/user/profile/${props.loginId}`
       );
-<<<<<<< HEAD
+
       console.log(res.data.userObject);
-=======
->>>>>>> f502259d6be0a0449ab8bdfc3ef37a5467559939
       setLoginId(res.data.userObject.loginId);
       setName(res.data.userObject.name);
     } catch (error) {
@@ -27,7 +25,6 @@ const InfoModal = (props) => {
     }
   };
 
-<<<<<<< HEAD
   // const getUserTopic = async () => {
   //   console.log("getUserTopic");
   //   try {
@@ -42,22 +39,6 @@ const InfoModal = (props) => {
   useEffect(() => {
     getUserProfile();
     // getUserTopic();
-=======
-  const getUserTopic = async () => {
-    console.log("getUserTopic");
-    try {
-      const res = await axios.get(
-        `http://localhost:3500/user/topic/${props.userId}`
-      );
-      console.log(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    getUserProfile();
-    getUserTopic();
->>>>>>> f502259d6be0a0449ab8bdfc3ef37a5467559939
   }, []);
 
   return (
