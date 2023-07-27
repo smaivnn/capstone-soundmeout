@@ -2,7 +2,7 @@ const user = require("../model/User");
 const Notification = require(`../model/Notification`);
 
 const saveNotification = async (
-  redirectPath,
+  redirectURL,
   category,
   senderId,
   receiverId
@@ -12,7 +12,7 @@ const saveNotification = async (
       senderId,
       receiverId,
       category,
-      redirectPath,
+      redirectURL,
       read: false,
     });
 

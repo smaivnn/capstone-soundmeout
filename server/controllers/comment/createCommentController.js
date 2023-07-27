@@ -4,7 +4,7 @@ const { saveNotification } = require("../../utils/saveNotification");
 
 const handleCreateComment = async (req, res) => {
   const { _id } = req.userInfo;
-  const { text, paper_id } = req.body;
+  const { text, paper_id, redirectURL } = req.body;
   if (!_id || !text || !paper_id) {
     return res.status(400).json({
       status: 400,
@@ -44,7 +44,7 @@ const handleCreateComment = async (req, res) => {
     const category = `comment`;
     const senderId = _id;
     const receiverId = foundPaperPromise.author;
-    await saveNotification(redirectPath, category, senderId, receiverId);
+    await saveNotification(redirectURL, category, senderId, receiverId);
 
     const result = Promise.all([newPaper.save(), foundPaper.save()]);
   } catch (error) {}

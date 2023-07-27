@@ -3,7 +3,7 @@ const User = require("../../model/User");
 
 const handleNotificationRead = async (req, res) => {
   // 유저 정보를 확인한다.
-  const { userInfo } = req.userInfo;
+  const userInfo = req.userInfo;
 
   try {
     // 내 알림 중에서 read가 false인것이 1개 이상인지 확인한다.
@@ -16,7 +16,6 @@ const handleNotificationRead = async (req, res) => {
     if (count > 0) {
       const foundNoti = await Notification.find({
         receiverId: userInfo._id,
-        redirectURL,
         read: false,
       });
 

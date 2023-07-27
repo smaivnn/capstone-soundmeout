@@ -5,7 +5,7 @@ const { saveNotification } = require("../../utils/saveNotification");
 
 const handlePaperVisible = async (req, res) => {
   const { _id } = req.userInfo;
-  const { paper_id } = req.body;
+  const { paper_id, redirectURL} = req.body;
   /**
    * 모두에게 공개되어도 됨.
    * 그냥 단일 페이퍼를 제공한다.
@@ -38,7 +38,7 @@ const handlePaperVisible = async (req, res) => {
     const senderId = _id;
     const receiverId = foundPaper.author;
     const result = await saveNotification(
-      redirectPath,
+      redirectURL,
       category,
       senderId,
       receiverId

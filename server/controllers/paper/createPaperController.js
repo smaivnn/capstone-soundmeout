@@ -4,7 +4,7 @@ const { saveNotification } = require(`../../utils/saveNotification`);
 
 const handleCreatePaper = async (req, res) => {
   const { _id } = req.userInfo;
-  const { topic_id, text, redirectPath = "/home" } = req.body;
+  const { topic_id, text, redirectURL = "/home" } = req.body;
 
   if (!_id || !topic_id || !text) {
     return res.status(400).json({
@@ -46,7 +46,7 @@ const handleCreatePaper = async (req, res) => {
       const senderId = _id;
       const receiverId = foundTopic.author;
       const result = await saveNotification(
-        redirectPath,
+        redirectURL,
         category,
         senderId,
         receiverId
