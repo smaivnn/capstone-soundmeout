@@ -177,7 +177,11 @@ router.get(`/:topic_id`, verifyAndSendToken, getTopicController.handleGetTopic);
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.patch(`/delete/:topic_id`, deleteTopicController.handleDeleteTopic);
+router.patch(
+  `/delete/:topic_id`,
+  verifyToken,
+  deleteTopicController.handleDeleteTopic
+);
 
 /**
  * @swagger

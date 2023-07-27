@@ -16,6 +16,7 @@ const handleDeleteTopic = async (req, res) => {
   try {
     const foundUser = await User.findOne({ _id });
     const logedInUserRefreshToken = req.cookies.refreshToken;
+
     if (foundUser.refreshToken.toString() !== logedInUserRefreshToken) {
       return res.status(400).json({
         status: 400,
