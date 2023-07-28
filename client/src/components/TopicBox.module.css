@@ -1,14 +1,11 @@
 .frame {
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-bottom: 5px;
-  margin-top: 5px;
-  font-size: 20px;
+  margin: 5px 10px;
+  font-size: 15px;
   width: 100%;
   font-family: "TheJamsil5Bold", sans-serif;
   border-radius: 5px;
-  border: 2px solid WHITE;
+  border: 2px solid white;
   color: black;
-  background-color: rgb(245, 245, 245);
+  background-color: white;
   text-align: left;
 }

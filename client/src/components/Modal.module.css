@@ -13,8 +13,8 @@
 
 .modal {
   background-color: #fff;
-  width: 80%;
-  max-width: 600px;
+  width: 100%;
+  max-width: 500px;
   border-radius: 5px;
   overflow: hidden;
 }

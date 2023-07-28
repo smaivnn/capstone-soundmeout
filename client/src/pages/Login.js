@@ -75,18 +75,18 @@ const Login = () => {
   return (
     <div>
       <Header />
-      <Box>이메일 ID로 로그인</Box>
+      <Box>계정 로그인</Box>
       <Input
         className={styleInput.input}
-        placeholder="이메일 ID를 입력하세요."
+        placeholder="이메일"
         valid="true"
         onChange={idChangeHandler}
       >
-        ID
+        <span>ID</span>
       </Input>
       <Input
         className={styleInput.input}
-        placeholder="비밀번호를 입력하세요."
+        placeholder="비밀번호"
         valid="true"
         type="password"
         onChange={passwordChangeHandler}

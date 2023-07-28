@@ -1,6 +1,7 @@
-
 .container {
-  margin:auto auto 0px auto;
+  margin: 0px auto;
   width: 525px;
-  
+  height: 100vh;
+  border: 1px solid black;
+  background-color: #ffe9fa;
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import img from "../../img/btn_google_signin_dark_focus_web.png";
+import img from "../../img/btn_google_signin_light_pressed_web@2x.png";
 let url = "https://accounts.google.com/o/oauth2/v2/auth";
 url +=
   "?client_id=" +
@@ -17,7 +17,7 @@ const GoogleLogin = () => {
     <img
       src={img}
       onClick={handleSubmit}
-      style={{ height: "40%", width: "40%" }}
+      style={{ height: "50px", width: "300px" }}
     />
   );
 };

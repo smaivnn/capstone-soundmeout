@@ -1,5 +1,5 @@
 import React from "react";
-import img from "../../img/kakao_login_medium_narrow.png";
+import img from "../../img/kakao_login_medium_wide.png";
 const Kakao = () => {
   const REST_API_KEY = "62905cdd843de0ba5b4606b6cd28b12b";
   const redirectURI = "http://localhost:3000/auth/kakao";
@@ -11,11 +11,8 @@ const Kakao = () => {
 
   return (
     <div>
-      <img
-        src={img}
-        onClick={handle}
-        style={{ height: "100%", width: "105%" }}
-      ></img>
+      <img src={img} onClick={handle}></img>
+      
     </div>
   );
 };

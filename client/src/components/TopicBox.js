@@ -8,8 +8,10 @@ const Thumbnail = (props) => {
   const formattedDate = date.toLocaleDateString("en-US", options);
   return (
     <div className={props.className} onClick={props.onClick}>
-      <h2 style={{ textAlign: "left" }}> {props.title}</h2>
-      <h3 style={{ textAlign: "right" }}>{formattedDate}</h3>
+      <h2 style={{ textAlign: "left", marginLeft: "10px" }}> {props.title}</h2>
+      <h3 style={{ textAlign: "right", marginRight: "10px" }}>
+        {formattedDate}
+      </h3>
     </div>
   );
 };

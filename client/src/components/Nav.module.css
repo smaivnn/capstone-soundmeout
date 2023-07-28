@@ -1,21 +1,18 @@
 .container {
-  
   width: 525px;
   height: 70px;
   background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-wrap: nowrap;
-  position:fixed;
-  bottom:0;
+  position: fixed;
+  bottom: 0;
 }
 
 .icon {
-  
   width: 30px;
   height: 30px;
   margin-right: 5px;
 }
-

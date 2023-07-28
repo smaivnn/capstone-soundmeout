@@ -1,16 +1,13 @@
 .frame {
-  margin-left: 5%;
-  margin-right: 5%;
-  margin-bottom: 5%;
-  margin-top: 5%;
+  margin: 5%;
   font-size: 20px;
   font-family: "TheJamsil5Bold", sans-serif;
   border-radius: 5px;
   border: 2px solid WHITE;
   color: black;
-  background-color: rgb(245, 245, 245);
+  background-color: white;
   text-align: right;
-  padding-bottom: 20px;
+  padding: 20px 10px;
 }
 
 .frame_profile {
