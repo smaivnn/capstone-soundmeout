@@ -255,6 +255,82 @@ router.post(
   accountController.handleUpdatePassword
 );
 
+/**
+ * @swagger
+ * /auth/find-password/update-password:
+ *   post:
+ *     summary: 메일 통한 비밀번호 변경
+ *     description: header로 access_token과 body로 new_password를 받아 검증 후 비밀번호를 변경한다.
+ *     tags:
+ *       - Auth
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         description: Access token
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *        description: new_password를 넣어주세요.
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *             type: object
+ *             properties:
+ *               new_password:
+ *                 type: string
+ *                 example: asdf1234
+ *             required:
+ *               - new_password
+ *     responses:
+ *       200:
+ *         description: Ok
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: integer
+ *                   example: 200
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: 비밀번호 변경 성공
+ *       204:
+ *         description: No Content
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/responseSuccess'
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/responseFailed'
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/responseFailed'
+ *       403:
+ *         description: Forbidden
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/responseFailed'
+ */
+router.post(
+  `/find-password/update-password`,
+  verifyJwtToken.verifyToken,
+  accountController.handleUpdatePasswordByEmail
+);
+
 router.get(
   "/find-password/callback",
   mailCallbackController.handlePasswordMailCallback
