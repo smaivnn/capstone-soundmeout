@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Modal.module.css";
-import Button from "./Button";
-import styleButton from "./Button.module.css";
+
 import Scrollbar from "./Scrollbar";
 import ScrollbarStyle from "./Scrollbar.module.css";
 import Text from "./Text";
@@ -10,26 +9,28 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 const Modal = (props) => {
   const accessToken = useSelector((state) => state.accesstoken.accessToken);
-  const [notiArray, setNotiArray] = useState([]);
-  useEffect(() => {
-    getNoti();
-  }, []);
-  const getNoti = async () => {
-    const res = await axios.get(
-      `${process.env.REACT_APP_API_URL}/notification/check`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+  const notiArray = props.notiArray;
+
+  const notiClickHandler = async (event) => {
+    const notiId = event.target.id;
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/noti/read/${notiId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      if (res.data.success) {
+        alert("알림을 읽었습니다.");
+        window.location.href = "/main";
       }
-    );
-    if (res.data.success) {
-      if (res.data.notiArray.length > 0) {
-        setNotiArray(res.data.notiArray);
-      }
+    } catch (err) {
+      console.log(err);
+      alert("알림을 읽는데 실패했습니다.");
     }
   };
-
   return (
     <div className={styles.modalBackdrop}>
       <div className={styles.modal}>
@@ -43,9 +44,15 @@ const Modal = (props) => {
         <div className={styles.modalBody}>
           <Scrollbar className={ScrollbarStyle.scrollbar_bigger}>
             {notiArray.map((noti) => (
-              <div>
-                <Text className={styleText.frame}>{noti.category}</Text>
-              </div>
+              <Text
+                className={styleText.frame}
+                id={noti._id}
+                key={noti._id}
+                onClick={notiClickHandler}
+              >
+                {noti.category}
+                {noti._id}
+              </Text>
             ))}
           </Scrollbar>
         </div>

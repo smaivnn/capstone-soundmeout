@@ -29,11 +29,12 @@ const Main = () => {
         },
       }
     );
-    console.log(res.data);
 
     if (res.data.success) {
       if (res.data.notiArray.length > 0) {
         setNoti(true);
+        setNotiArray(res.data.notiArray);
+        console.log(notiArray);
       }
     }
   };
@@ -47,7 +48,12 @@ const Main = () => {
   }
   return (
     <div>
-      <Header useMenuButton="true" useNotiButton="true" isNoti={noti}></Header>
+      <Header
+        useMenuButton="true"
+        useNotiButton="true"
+        isNoti={noti}
+        notiArray={notiArray}
+      ></Header>
       {login ? (
         <div>
           <Routes>

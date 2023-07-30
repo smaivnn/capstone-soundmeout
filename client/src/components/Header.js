@@ -90,6 +90,7 @@ const Header = (props) => {
           show={showNotificationModal}
           onClose={handleCloseModal}
           title="Notification"
+          notiArray={props.notiArray}
         ></NotiModal>
       )}
       {showTopicMenuModal && (
