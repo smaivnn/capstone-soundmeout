@@ -8,9 +8,11 @@ import Starting from "./pages/Starting";
 import Main from "./pages/Main";
 import Auth from "./pages/Auths";
 import TopicWrapper from "./pages/TopicWrapper";
+import axios from "axios";
 import FindPw from "./pages/FindPassword";
 
 function App() {
+  axios.defaults.withCredentials = true;
   return (
     <div className="container">
       <Routes>
