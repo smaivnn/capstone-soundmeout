@@ -15,16 +15,17 @@ const Modal = (props) => {
     getNoti();
   }, []);
   const getNoti = async () => {
-    const res = await axios.get("http://localhost:3500/notification/check", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const res = await axios.get(
+      `${process.env.REACT_APP_API_URL}/notification/check`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
     if (res.data.success) {
       if (res.data.notiArray.length > 0) {
         setNotiArray(res.data.notiArray);
-        console.log(res.data.notiArray);
-        console.log(notiArray);
       }
     }
   };

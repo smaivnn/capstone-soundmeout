@@ -4,6 +4,8 @@ const LOGIN_REQUEST = "auth/LOGIN_REQUEST";
 const LOGIN_SUCCESS = "auth/LOGIN_SUCCESS";
 const LOGIN_FAILURE = "auth/LOGIN_FAILURE";
 const OAUTH_LOGIN = "auth/OAUTH_LOGIN";
+const LOCAL_LOGIN = "auth/LOCAL_LOGIN";
+const LOGOUT = "auth/LOGOUT";
 
 // 로그인 액션 생성자 함수
 export const loginRequest = () => ({ type: LOGIN_REQUEST });
@@ -21,10 +23,8 @@ export const login = (id, password) => async (dispatch) => {
       loginId: id,
       password: password,
     };
-    console.log("fetching,,,");
-    console.log(data);
     const res = await axios.post(
-      "http://localhost:3500/auth/login",
+      `${process.env.REACT_APP_API_URL}/auth/login`,
 
       data,
       {
@@ -32,17 +32,24 @@ export const login = (id, password) => async (dispatch) => {
       }
     );
     dispatch(loginSuccess());
-    console.log("login res");
-    console.log(res);
+
     return res;
   } catch (error) {
     dispatch(loginFailure(error));
   }
 };
+export const localLogin = (isLoggedin) => ({
+  type: LOCAL_LOGIN,
+  payload: isLoggedin,
+});
 
 export const oauthLogin = (isLoggedin) => ({
   type: OAUTH_LOGIN,
   payload: isLoggedin,
+});
+
+export const logout = () => ({
+  type: LOGOUT,
 });
 
 // 초기 상태 정의
@@ -83,6 +90,19 @@ const authReducer = (state = initialState, action) => {
         isLoggedin: action.payload,
         oauthLogin: true,
       };
+    case LOCAL_LOGIN:
+      return {
+        ...state,
+        isLoggedin: action.payload,
+        oauthLogin: false,
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        isLoggedin: false,
+        oauthLogin: false,
+      };
+
     default:
       return state;
   }

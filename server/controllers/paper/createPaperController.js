@@ -5,7 +5,7 @@ const { saveNotification } = require(`../../utils/saveNotification`);
 const handleCreatePaper = async (req, res) => {
   const { _id } = req.userInfo;
   const { topic_id, text, redirectURL = "/home" } = req.body;
-
+  console.log(_id, topic_id, text, redirectURL);
   if (!_id || !topic_id || !text) {
     return res.status(400).json({
       status: 400,
@@ -56,10 +56,11 @@ const handleCreatePaper = async (req, res) => {
         status: 200,
         success: true,
         message: "성공적인 조회",
-        redirectPath: redirectPath,
+        redirectPath: redirectURL,
       });
     }
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       success: false,
       status: 500,

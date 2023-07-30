@@ -26,6 +26,7 @@ const handleNotificationRead = async (req, res) => {
     } else {
       return res.status(200).json({
         success: true,
+        notiArray: [],
       });
     }
   } catch (error) {

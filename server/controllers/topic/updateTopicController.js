@@ -1,9 +1,9 @@
 const Topic = require("../../model/Topic");
 const handleUpdateTopic = async (req, res) => {
-  req.userInfo = { _id: "64732750f627afffdbce28f8" }; //test
   const { _id } = req.userInfo;
   const { topic_id } = req.params;
   const { visible } = req.body;
+  console.log(visible);
   if (!topic_id || !_id || visible === undefined) {
     return res.status(400).json({
       status: 400,

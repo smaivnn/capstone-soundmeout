@@ -19,19 +19,22 @@ const KakaoLogin = () => {
       const data = {
         code: KAKAO_CODE,
       };
-      console.log("starting axios");
-      const res = await axios.post("http://localhost:3500/auth/kakao", data);
+
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/auth/kakao`,
+        data
+      );
       if (res.status === 200) {
-        console.log(res.data);
         const decode = jwt_decode(res.data.accessToken);
-        console.log(decode);
+
         dispatch(setAccessToken(res.data.accessToken));
         /* 디코딩된 액세스토큰의 정보 저장*/
         dispatch(setUser(decode.email, decode.loginId, decode.name));
         dispatch(oauthLogin(true));
         navigate("/main");
       } else {
-        console.log("kakao login fail");
+        alert("로그인에 실패했습니다. 다시 시도해주세요.");
+        navigate("/login");
       }
     } catch (error) {
       console.log(error);
@@ -42,8 +45,7 @@ const KakaoLogin = () => {
 
   useEffect(() => {
     SendKakaoCode();
-    console.log("useEffect");
-  }, []);
+  });
 
   return isLoading ? <div>Loading...</div> : <div>Success!</div>;
 };

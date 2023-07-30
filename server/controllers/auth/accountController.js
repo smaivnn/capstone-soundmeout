@@ -14,7 +14,7 @@ const handleDeleteAccount = async (req, res, next) => {
     });
   }
   try {
-    const findUser = await User.findOne({ _id: req._id });
+    const findUser = await User.findOne({ _id: req.userInfo._id });
     if (!findUser) {
       return res.status(404).json({
         success: false,
@@ -42,6 +42,7 @@ const handleDeleteAccount = async (req, res, next) => {
     await findUser.save();
 
     res.status(200).json({ success: true, message: "Delete account success" });
+
     next();
   } catch (error) {
     return res.status(500).json({
@@ -56,6 +57,7 @@ const handleDeleteAccount = async (req, res, next) => {
 const handleUpdatePassword = async (req, res, next) => {
   // 2차 검증을 위한 password 확인
   const { password, newPassword } = req.body;
+
   if (!password || !newPassword) {
     return res.status(400).json({
       success: false,
@@ -66,7 +68,8 @@ const handleUpdatePassword = async (req, res, next) => {
     });
   }
   try {
-    const findUser = await User.findOne({ _id: req._id });
+    console.log(req._id);
+    const findUser = await User.findOne({ _id: req.userInfo._id });
     if (!findUser) {
       return res.status(404).json({
         success: false,

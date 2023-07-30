@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
 import Home from "./Home";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Routes, Route } from "react-router-dom";
 import Header from "../components/Header";
 import Nav from "../components/Nav";
@@ -7,35 +8,42 @@ import Posting from "./Posting";
 import Find from "./Find";
 import Profile from "./Profile";
 import ChangePw from "./ChangePw";
+
+import DeleteAccount from "./DeleteAccount";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import axios from "axios";
 
 const Main = () => {
   const login = useSelector((state) => state.login.isLoggedin);
-  const [noti, setNoti] = useState(false);
   const navigate = useNavigate();
+  const [noti, setNoti] = useState(false);
+  const [notiArray, setNotiArray] = useState([]);
+
   const accessToken = useSelector((state) => state.accesstoken.accessToken);
   const getNoti = async () => {
-    const res = await axios.get("http://localhost:3500/notification/check", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const res = await axios.get(
+      `${process.env.REACT_APP_API_URL}/notification/check`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    console.log(res.data);
+
     if (res.data.success) {
       if (res.data.notiArray.length > 0) {
         setNoti(true);
-        console.log(res.data);
       }
     }
   };
   useEffect(() => {
     getNoti();
   }, [noti]);
-  console.log(noti, "noti");
   if (!login) {
     alert("로그인이 필요한 서비스입니다.");
     window.location.href = "/login";
+    return;
   }
   return (
     <div>
@@ -49,7 +57,7 @@ const Main = () => {
             <Route path="/profile" element={<Profile />} />
             <Route path="/home" element={<Home />} />
             <Route path="/changepassword" element={<ChangePw />} />
-            <Route path="/deleteaccount" element={<ChangePw />} />
+            <Route path="/deleteaccount" element={<DeleteAccount />} />
           </Routes>
         </div>
       ) : (

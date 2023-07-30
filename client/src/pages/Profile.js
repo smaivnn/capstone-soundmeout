@@ -11,13 +11,14 @@ import styleScrollbar from "../components/Scrollbar.module.css";
 import { useDispatch } from "react-redux";
 import { setAccessToken } from "../modules/accesstoken";
 import { setUser } from "../modules/user";
-import { oauthLogin } from "../modules/login";
+import { logout } from "../modules/login";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import jwt_decode from "jwt-decode";
 import styles from "../components/PostItModal.module.css";
 import InfoModal from "../components/InfoModal";
+
 const Profile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ const Profile = () => {
   };
 
   const clickInfoHandler = (event) => {
-    const id = event.currentTarget.getAttribute("_id");
+    const id = event.currentTarget.getAttribute("loginId");
     setShowInfoModal(true);
     setUserId(id);
   };
@@ -48,7 +49,7 @@ const Profile = () => {
   const getFollowingHandler = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:3500/follow/followings/${myId}`,
+        `${process.env.REACT_APP_API_URL}/follow/followings/${myId}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -64,7 +65,7 @@ const Profile = () => {
   const getFollowerHandler = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:3500/follow/followers/${myId}`,
+        `${process.env.REACT_APP_API_URL}/follow/followers/${myId}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -72,8 +73,6 @@ const Profile = () => {
         }
       );
       setFollower(res.data.result);
-      console.log("getFollower");
-      console.log(res.data.result);
     } catch (error) {
       console.log(error);
     }
@@ -83,7 +82,7 @@ const Profile = () => {
   const LogoutHandler = () => {
     dispatch(setAccessToken(""));
     dispatch(setUser("", "", ""));
-    dispatch(oauthLogin(false));
+    dispatch(logout());
     alert("로그아웃 되었습니다.");
     navigate("/main");
   };
@@ -99,8 +98,6 @@ const Profile = () => {
       <Text className={styleText.frame}>
         <div>팔로잉 : {following.length} 명</div>
         <div>팔로워 : {follower.length} 명</div>
-        <div>게시물 : 3개</div>
-        <div>받은 포스트잇 :34개</div>
       </Text>
       <Button
         className={styleButton.button_modalSmall}
