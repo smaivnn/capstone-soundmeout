@@ -5,8 +5,8 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import styleInput from "../components/Input.module.css";
 import styleButton from "../components/Button.module.css";
-import { useDispatch } from "react-redux";  
-import {signup}  from "../modules/signup";
+import { useDispatch } from "react-redux";
+import { signup } from "../modules/signup";
 import { useNavigate } from "react-router-dom";
 const SignUp = () => {
   const navigate = useNavigate();
@@ -21,11 +21,11 @@ const SignUp = () => {
   const passwordChangeHandler = (event) => {
     setPassword(event.target.value);
   };
-  
+
   const passwordRChangeHandler = (event) => {
     setPasswordR(event.target.value);
   };
-  
+
   const nameChangeHandler = (event) => {
     setName(event.target.value);
   };
@@ -35,15 +35,19 @@ const SignUp = () => {
   };
   //Post 요청
   const handleSubmit = async () => {
-   const res = await dispatch(signup(email, name, email, password));
-    console.log(res)
+    const res = await dispatch(signup(email, name, email, password));
     if (!res) {
       alert("Fail");
     } else {
-    alert("Success");
-    navigate("/main");}
+      alert("Success");
+      navigate("/main");
+    }
   };
-  
+
+  //이메일 인증
+  // const emailCheckHandler = async() => {
+  // }
+
   //비밀번호 일치  확인
   useEffect(() => {
     if (password === passwordR) {
@@ -51,7 +55,7 @@ const SignUp = () => {
     } else {
       setPasswordCheck(false);
     }
-  }, [password,passwordR]);
+  }, [password, passwordR]);
 
   function handleEmailChange(event) {
     const inputEmail = event.target.value;
@@ -65,7 +69,12 @@ const SignUp = () => {
     <div>
       <Header />
       <Box>회원가입</Box>
-      <Input className={styleInput.input} onChange={nameChangeHandler} placeholder="이름을 입력하세요." valid="true">
+      <Input
+        className={styleInput.input}
+        onChange={nameChangeHandler}
+        placeholder="이름을 입력하세요."
+        valid="true"
+      >
         이름
       </Input>
       <Input
@@ -84,7 +93,7 @@ const SignUp = () => {
         이메일
       </Input>
       <Input
-      className={styleInput.input}
+        className={styleInput.input}
         placeholder="비밀번호를 입력하세요."
         valid="true"
         value={password}
@@ -94,24 +103,32 @@ const SignUp = () => {
         비밀번호
       </Input>
       <Input
-      className={passwordCheck ? styleInput.input : styleInput.input_invalid}
+        className={passwordCheck ? styleInput.input : styleInput.input_invalid}
         placeholder="비밀번호를 다시 입력하세요."
         valid={passwordCheck}
         value={passwordR}
         onChange={passwordRChangeHandler}
         type="password"
       >
-       비밀번호 확인
+        비밀번호 확인
       </Input>
 
-      <Button className={styleButton.button} onClick={mailButtonHandler}>인증번호 받기</Button>
+      <Button className={styleButton.button} onClick={mailButtonHandler}>
+        인증번호 받기
+      </Button>
 
-      <Input className={styleInput.input} placeholder="인증번호를 입력하세요." valid="true">
+      <Input
+        className={styleInput.input}
+        placeholder="인증번호를 입력하세요."
+        valid="true"
+      >
         인증번호
       </Input>
       <Button className={styleButton.button_modalSmall}>인증번호 확인</Button>
       <div></div>
-      <Button onClick={handleSubmit} className={styleButton.button}>회원가입</Button>
+      <Button onClick={handleSubmit} className={styleButton.button}>
+        회원가입
+      </Button>
     </div>
   );
 };

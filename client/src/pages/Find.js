@@ -37,10 +37,9 @@ const Find = () => {
     }
     try {
       const res = await axios.post(
-        `http://localhost:3500/user/search/${searchId}`
+        `${process.env.REACT_APP_API_URL}/user/search/${searchId}`
       );
       setUserArray(res.data.userArray);
-      console.log(res.data.userArray);
     } catch (error) {
       console.log(error);
     }
@@ -48,10 +47,9 @@ const Find = () => {
 
   const followClickHandler = async (event) => {
     const id = event.currentTarget.getAttribute("_id");
-    console.log(id);
     try {
       const res = await axios.post(
-        `http://localhost:3500/follow/${id}`,
+        `${process.env.REACT_APP_API_URL}/follow/${id}`,
         {},
         {
           headers: {
@@ -59,10 +57,12 @@ const Find = () => {
           },
         }
       );
-      console.log(res.data);
     } catch (error) {
-      console.log(error.response.status);
-      //status 코드에 따른 핸들링
+      if (error.response.status === 400) {
+        alert("이미 팔로우한 사람입니다.");
+      } else if (error.response.status === 404) {
+        alert("존재하지 않는 유저입니다.");
+      }
     }
   };
 
@@ -90,7 +90,7 @@ const Find = () => {
 
               <div>
                 <button
-                  loginId={user.loginId}
+                  loginid={user.loginId}
                   className={styles.submitButton}
                   onClick={clickInfoHandler}
                 >

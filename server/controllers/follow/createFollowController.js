@@ -40,7 +40,6 @@ const handleCreateFollow = async (req, res) => {
         message: "이미 팔로우한 사람",
       });
     }
-    console.log("Dd");
     const result = await Follow.create({
       followerId: _id,
       followingId: followingId,

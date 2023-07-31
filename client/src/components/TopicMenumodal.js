@@ -12,15 +12,16 @@ import styleHead from "./Head1.module.css";
 const TopicMenuModal = (props) => {
   const accessToken = useSelector((state) => state.accesstoken.accessToken);
   const [showUpdate, setShowUpdate] = useState(false);
-  const [checked, setChecked] = useState(props.visible);
+  const [checked, setChecked] = useState(props.visible ? false : true);
   const navigate = useNavigate();
+
   const setVisibleTopic = async () => {
     try {
       const data = {
-        visible: !checked,
+        visible: !props.visible,
       };
       const res = await axios.put(
-        `http://localhost:3500/topic/update/${props.topicId}`,
+        `${process.env.REACT_APP_API_URL}/topic/update/${props.topicId}`,
         data,
         {
           headers: {
@@ -28,14 +29,16 @@ const TopicMenuModal = (props) => {
           },
         }
       );
-      setChecked(!checked);
+      console.log(res.status, "a");
       if (res.status === 200) {
         alert("토픽이 수정되었습니다.");
         navigate(`/topic/${props.topicId}`);
         props.onClose();
+        setChecked(!checked);
         window.location.reload();
       }
     } catch (error) {
+      alert("토픽 수정에 실패했습니다 : 권한이 없습니다.");
       console.log(error);
     }
   };
@@ -61,7 +64,7 @@ const TopicMenuModal = (props) => {
               {showUpdate && (
                 <div>
                   <Head1 className={styleHead.h2}>토픽 비공개</Head1>
-                  {checked ? (
+                  {!checked ? (
                     <img
                       src={onCheck}
                       onClick={setVisibleTopic}

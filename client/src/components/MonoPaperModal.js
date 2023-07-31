@@ -9,8 +9,6 @@ const MonoPaperModal = (props) => {
   const accessToken = useSelector((state) => state.accesstoken.accessToken);
 
   const visible = props.isvisible;
-
-  console.log(visible);
   const handleChange = (event) => {
     const value = event.target.value;
     setText(value);
@@ -18,29 +16,29 @@ const MonoPaperModal = (props) => {
   };
 
   const updatePaperHandler = async () => {
-    console.log("updatePaperHandler");
     try {
       const res = await axios.put(
-        `http://localhost:3500/paper/visible`,
+        `${process.env.REACT_APP_API_URL}/paper/visible`,
         { paper_id: props.paperid },
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
+          withCredentials: true,
         }
       );
-      console.log(res);
+
       if (res.status === 200) {
         alert("페이퍼가 수정되었습니다.");
         window.location.reload();
       }
     } catch (error) {
+      alert("페이퍼 수정에 실패했습니다 : 권한이 없습니다.");
       console.log(error);
     }
   };
 
   const deletePaperHandler = async () => {
-    console.log("deletePaperHandler");
     try {
       const res = await axios.patch(
         `http://localhost:3500/paper/delete`,
@@ -49,14 +47,16 @@ const MonoPaperModal = (props) => {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
+          withCredentials: true,
         }
       );
-      console.log(res);
+
       if (res.status === 200) {
         alert("페이퍼가 삭제되었습니다.");
         window.location.reload();
       }
     } catch (error) {
+      alert("페이퍼 삭제에 실패했습니다 : 권한이 없습니다.");
       console.log(error);
     }
   };

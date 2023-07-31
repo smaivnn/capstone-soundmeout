@@ -263,7 +263,11 @@ router.patch(
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.put(`/update/:topic_id`, updateTopicController.handleUpdateTopic);
+router.put(
+  `/update/:topic_id`,
+  verifyToken,
+  updateTopicController.handleUpdateTopic
+);
 
 router.post(
   `/list`,

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Modal.module.css";
-import Button from "./Button";
-import styleButton from "./Button.module.css";
+
 import Scrollbar from "./Scrollbar";
 import ScrollbarStyle from "./Scrollbar.module.css";
 import Text from "./Text";
@@ -10,25 +9,31 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 const Modal = (props) => {
   const accessToken = useSelector((state) => state.accesstoken.accessToken);
-  const [notiArray, setNotiArray] = useState([]);
-  useEffect(() => {
-    getNoti();
-  }, []);
-  const getNoti = async () => {
-    const res = await axios.get("http://localhost:3500/notification/check", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    if (res.data.success) {
-      if (res.data.notiArray.length > 0) {
-        setNotiArray(res.data.notiArray);
-        console.log(res.data.notiArray);
-        console.log(notiArray);
+  const notiArray = props.notiArray;
+
+  const notiClickHandler = async (event) => {
+    const notiId = event.currentTarget.getAttribute("_id");
+    const rediurl = event.currentTarget.getAttribute("rediurl");
+    window.location.href = rediurl;
+    try {
+      const res = await axios.patch(
+        `${process.env.REACT_APP_API_URL}/notification/read/${notiId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      console.log(res);
+      if (res.data.success) {
+        console.log("알림을 읽었습니다.");
       }
+    } catch (err) {
+      console.log(err);
+      alert("알림을 읽는데 실패했습니다.");
     }
   };
-
   return (
     <div className={styles.modalBackdrop}>
       <div className={styles.modal}>
@@ -42,9 +47,16 @@ const Modal = (props) => {
         <div className={styles.modalBody}>
           <Scrollbar className={ScrollbarStyle.scrollbar_bigger}>
             {notiArray.map((noti) => (
-              <div>
-                <Text className={styleText.frame}>{noti.category}</Text>
-              </div>
+              <Text
+                className={styleText.frame}
+                id={noti._id}
+                key={noti._id}
+                redirectURL={noti.redirectURL}
+                onClick={notiClickHandler}
+              >
+                {noti.category}
+                {noti._id}
+              </Text>
             ))}
           </Scrollbar>
         </div>

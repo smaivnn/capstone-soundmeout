@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Scrollbar from "../components/Scrollbar";
 import Head1 from "../components/Head1";
 import styleHead from "../components/Head1.module.css";
+import Scrollbar from "../components/Scrollbar";
 import styleScrollbar from "../components/Scrollbar.module.css";
 import TopicBox from "../components/TopicBox";
 import styleTopicBox from "../components/TopicBox.module.css";
@@ -16,13 +16,12 @@ const Home = () => {
   const accessToken = useSelector((state) => state.accesstoken.accessToken);
   const [endPoint, setEndPoint] = useState();
   const [topicArray, setTopicArray] = useState([]);
+  const [paperArray, setPaperArray] = useState([]);
   const navigate = useNavigate();
   const [ref, inView] = useInView({
     threshold: 0,
   });
-  console.log(loginId);
-  const ThumbnailClickHandler = (event, _id) => {
-    console.log(_id);
+  const topicClickHandler = (event, _id) => {
     navigate(`/topic/${_id}`);
   };
   useEffect(() => {
@@ -35,7 +34,7 @@ const Home = () => {
   const getMyTopic = async () => {
     try {
       const res = await axios.post(
-        `http://localhost:3500/topic/list`,
+        `${process.env.REACT_APP_API_URL}/topic/list`,
         { searchUser: loginId, endPoint: endPoint },
         {
           headers: {
@@ -54,28 +53,22 @@ const Home = () => {
       console.log(error);
     }
   };
-  console.log(topicArray);
+
   const getMyPaper = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:3500/user/paper/${loginId}`
+        `${process.env.REACT_APP_API_URL}/user/paper/${loginId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
       );
-      console.log(res.data);
+      setPaperArray(res.data.paperArray);
     } catch (error) {
       console.log(error);
     }
   };
-
-  //   const getMyPaper = async () => {
-  //     try {
-  //       const res = await axios.get(
-  //         `http://localhost:3500/user/paper/${loginId}`
-  //       );
-  //       console.log(res.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
 
   return (
     <div>
@@ -87,22 +80,29 @@ const Home = () => {
             key={topic._id}
             _id={topic._id}
             title={topic.title}
-            onClick={(event) => ThumbnailClickHandler(event, topic._id)}
+            onClick={(event) => topicClickHandler(event, topic._id)}
             imageUrl={profile}
             date={topic.createdAt}
           />
-          //   <Thumbnail
-          //   imageUrl={profile}
-          //   title="제목"
-          //   onClick={ThumbnailClickHandler}
-          // ></Thumbnail>
         ))}
         <div style={{ marginTop: "20px" }} ref={ref}>
           더이상 조회할 토픽이 없음.
         </div>
       </Scrollbar>
       <Head1 className={styleHead.h1}>내가 작성한 페이퍼</Head1>
-      <Scrollbar className={styleScrollbar.scrollbar_container}></Scrollbar>
+      <Scrollbar className={styleScrollbar.scrollbar_container}>
+        {paperArray.map((paper) => (
+          <TopicBox
+            className={styleTopicBox.frame}
+            key={paper._id}
+            _id={paper._id}
+            title={paper.text}
+            onClick={(event) => topicClickHandler(event, paper.topic)}
+            imageUrl={profile}
+            date={paper.createdAt}
+          />
+        ))}
+      </Scrollbar>
     </div>
   );
 };

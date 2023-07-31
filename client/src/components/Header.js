@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import logo from "../img/logo.png";
 import menu from "../img/icons8-menu-rounded-50.png";
 import noti from "../img/icons8-알림-30.png";
@@ -90,6 +90,7 @@ const Header = (props) => {
           show={showNotificationModal}
           onClose={handleCloseModal}
           title="Notification"
+          notiArray={props.notiArray}
         ></NotiModal>
       )}
       {showTopicMenuModal && (

@@ -6,12 +6,14 @@ import styleButton from "../components/Button.module.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import jwt_decode from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 const Posting = () => {
+  const navigate = useNavigate();
   const accessToken = useSelector((state) => state.accesstoken.accessToken);
   const [title, setTitle] = useState("");
 
   const decode = jwt_decode(accessToken);
-  console.log(decode.userInfo);
+
   const titleChangeHandler = (event) => {
     setTitle(event.target.value);
   };
@@ -22,7 +24,7 @@ const Posting = () => {
       return;
     }
     const res = await axios.post(
-      "http://localhost:3500/topic/create",
+      `${process.env.REACT_APP_API_URL}/topic/create`,
       {
         title: title,
       },
@@ -32,9 +34,8 @@ const Posting = () => {
         },
       }
     );
-    console.log(res.data);
-
     alert("글이 등록되었습니다.");
+    navigate(`/topic/${res.data.result._id}`);
   };
 
   return (

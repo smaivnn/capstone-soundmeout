@@ -48,7 +48,7 @@ const PostItList = ({ posts }) => {
 
   const getRandomAngle = (postId) => {
     if (!angles[postId]) {
-      const angle = Math.floor(Math.random() * 20) - 10;
+      const angle = Math.floor(Math.random() * 20) - 5;
       setAngles((prevAngles) => ({ ...prevAngles, [postId]: angle }));
     }
     return angles[postId];
@@ -64,13 +64,11 @@ const PostItList = ({ posts }) => {
     const text = event.currentTarget.textContent;
     const id = event.currentTarget.getAttribute("paperid");
     const visible = event.currentTarget.getAttribute("isvisible");
-    console.log(event.currentTarget);
 
     setModalColor(color);
     setModalText(text);
     setPaperid(id);
     setVisible(visible);
-    console.log(visible);
   };
 
   return (

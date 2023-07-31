@@ -20,10 +20,7 @@ const Starting = () => {
         src={smoPic}
         alt="smoPic"
       />
-      <Button
-        className={styleButton.buttonMain}
-        onClick={() => navigate("/login")}
-      >
+      <Button className={styleButton.button} onClick={() => navigate("/login")}>
         지금 SOUNDMEOUT 시작하기
       </Button>
     </div>

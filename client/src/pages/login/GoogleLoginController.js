@@ -12,20 +12,19 @@ const GoogleLoginController = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     const code = new URLSearchParams(location.search).get("code");
-    console.log(code);
+
     const res = axios
-      .get(`http://localhost:3500/auth/google?code=${code}`)
+      .get(`${process.env.REACT_APP_API_URL}/auth/google?code=${code}`)
       .then((res) => {
         if (res.status === 200) {
-          console.log(res.data);
           const decode = jwt_decode(res.data.accessToken);
-          console.log(decode);
           dispatch(setAccessToken(res.data.accessToken));
           dispatch(setUser(decode.email, decode.loginId, decode.name));
           dispatch(oauthLogin(true));
           navigate("/main");
         } else {
           alert("로그인에 실패했습니다. 다시 시도해주세요.");
+          navigate("/login");
         }
       });
   }, []);

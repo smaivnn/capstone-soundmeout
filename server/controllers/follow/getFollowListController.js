@@ -65,6 +65,7 @@ const handleFollowerList = async (req, res) => {
       loginId: item.followerId.loginId,
       name: item.followerId.name,
     }));
+    console.log(transformedResult);
     return res.status(200).json({
       status: 200,
       success: true,

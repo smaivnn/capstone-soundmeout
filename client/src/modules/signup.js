@@ -23,7 +23,10 @@ export const signup = (id, name, email, password) => async (dispatch) => {
       password: password,
     };
 
-    const res = await axios.post("http://localhost:3500/auth/signup", data);
+    const res = await axios.post(
+      `${process.env.REACT_APP_API_URL}/auth/signup`,
+      data
+    );
     console.log(res);
 
     dispatch(signupSuccess());

@@ -14,7 +14,7 @@ const Topic = (props) => {
   const dispatch = useDispatch();
   const login = useSelector((state) => state.login.isLoggedin);
   const userId = useSelector((state) => state.user.loginId);
-  const [visible, setVisible] = useState("false");
+  const [visible, setVisible] = useState("qt");
   const accessToken = useSelector((state) => state.accesstoken.accessToken);
   const [paperArray, setPaperArray] = useState([]);
   const navigate = useNavigate();
@@ -27,17 +27,16 @@ const Topic = (props) => {
   const [ref, inView] = useInView({
     threshold: 0,
   });
-  console.log("accessToken", accessToken);
+
   const handleScroll = () => {
     setShowButton(window.scrollY === 0);
   };
   //토픽 내 페이퍼 받아오기
   const getPaper = async () => {
-    console.log(inView);
+    setVisible((prevState) => prevState);
     try {
-      console.log("getPaper");
       const res = await axios.post(
-        `http://localhost:3500/paper/list/${topicId}`,
+        `${process.env.REACT_APP_API_URL}/paper/list/${topicId}`,
         { endPoint: endPoint },
         {
           headers: {
@@ -46,14 +45,10 @@ const Topic = (props) => {
         }
       );
 
-      console.log("paper response");
-
-      if (res.data.paperArray.length === 0) {
-      } else {
+      if (res.data.paperArray.length !== 0) {
         setPaperArray((prevArray) => [...prevArray, ...res.data.paperArray]);
         const lastIndex = res.data.paperArray.length - 1;
         setEndPoint(res.data.paperArray[lastIndex]._id);
-        console.log(paperArray, "paperArray");
       }
     } catch (error) {
       console.log(error);
@@ -63,38 +58,37 @@ const Topic = (props) => {
   useEffect(() => {
     const getTopic = async () => {
       try {
-        console.log("getTopic");
-        const res = await axios.get(`http://localhost:3500/topic/${topicId}`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-        setVisible(res.data.result.visible);
-        setTopicTitle(res.data.result.title);
-        console.log("토픽 비저블 상태", res.data.result.visible, visible);
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_URL}/topic/${topicId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        if (res.status === 200) {
+          setVisible(res.data.result.visible);
+          setTopicTitle(res.data.result.title);
+
+          if (inView) {
+            getPaper();
+          }
+        } else {
+          alert("권한이 없습니다.");
+        }
       } catch (error) {
-        alert("존재하지 않는 토픽입니다.");
-        window.history.back();
+        alert("존재하지 않거나 비공개된 토픽입니다.");
+        navigate("/main");
       }
     };
-
     getTopic();
-  }, [visible]);
-
-  useEffect(() => {
-    setVisible(visible);
-    if (inView) {
-      getPaper();
-    }
+    getPaper();
   }, [inView, paperArray]);
-  //토픽 삭제
-  const deleteTopic = async () => {
-    console.log("deleteTopic");
 
-    console.log(topicId);
+  const deleteTopic = async () => {
     try {
       const res = await axios.patch(
-        `http://localhost:3500/topic/delete/${topicId}`,
+        `${process.env.REACT_APP_API_URL}/topic/delete/${topicId}`,
         {},
         {
           headers: {
@@ -103,12 +97,13 @@ const Topic = (props) => {
           withCredentials: true,
         }
       );
-      console.log(res);
+
       if (res.status === 200) {
         alert("토픽이 삭제되었습니다.");
-        navigate("/main");
+        window.location.reload();
       }
     } catch (error) {
+      alert("토픽 삭제에 실패했습니다 : 권한이 없습니다.");
       console.log(error);
     }
   };
@@ -122,28 +117,30 @@ const Topic = (props) => {
 
   //페이퍼를 작성해서 서버에 보내는 버튼
   const postItSubmitButton = async () => {
-    console.log("postItSubmitButton");
     try {
       const data = {
         text: postItTextValue,
         topic_id: topicId,
-        redirectPath: `topic/${topicId}`,
+        redirectURL: `topic/${topicId}`,
       };
-      console.log(data);
-      const res = await axios.post("http://localhost:3500/paper/create", data, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/paper/create`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
       if (res.status === 200) {
         alert("페이퍼가 등록되었습니다.");
-        console.log("paper response");
-        console.log(res.data);
+
         setShowAddPostIt(false);
         navigate(`/topic/${topicId}`);
         window.location.reload();
       } else {
-        console.log(res);
+        alert("페이퍼 등록에 실패했습니다.");
       }
     } catch (error) {
       console.log(error);
@@ -162,7 +159,6 @@ const Topic = (props) => {
   };
   /////페이퍼 끝
   window.addEventListener("scroll", handleScroll);
-
   return (
     <div>
       <div>
@@ -191,9 +187,10 @@ const Topic = (props) => {
             Add PostIt!
           </button>
         ) : null}
-
         <PostItList posts={paperArray}></PostItList>
-        <div ref={ref}>페이퍼의 마지막입니다!</div>
+        {paperArray.length !== 0 ? (
+          <div ref={ref}>페이퍼의 마지막입니다!</div>
+        ) : null}
       </div>
     </div>
   );

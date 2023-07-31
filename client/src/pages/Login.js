@@ -10,7 +10,7 @@ import styleInput from "../components/Input.module.css";
 import GoogleLogin from "./login/GoogleLogin";
 import NaverLogin from "./login/NaverLogin";
 import { useDispatch } from "react-redux";
-import { login } from "../modules/login";
+import { localLogin, login, oauthLogin } from "../modules/login";
 import { setAccessToken } from "../modules/accesstoken";
 import { setUser } from "../modules/user";
 import jwt_decode from "jwt-decode";
@@ -31,8 +31,6 @@ const Login = () => {
   const handleSubmit = async () => {
     try {
       const res = await dispatch(login(id, password));
-
-      console.log(res.data);
       if (
         !store.getState().login.loading &&
         store.getState().login.error === null &&
@@ -42,8 +40,6 @@ const Login = () => {
       ) {
         dispatch(setAccessToken(res.data.accessToken));
         const decode = jwt_decode(res.data.accessToken);
-        console.log("decode");
-        console.log(decode.userInfo);
 
         /* 디코딩된 액세스토큰의 정보 저장*/
         dispatch(
@@ -53,10 +49,16 @@ const Login = () => {
             decode.userInfo.name
           )
         );
-        console.log(res.status);
+
+        dispatch(localLogin(true));
         navigate("/main");
+      } else if (!id || !password) {
+        alert("아이디와 비밀번호를 입력해주세요.");
+      } else {
+        alert("일치하지 않는 정보입니다.");
       }
     } catch (error) {
+      console.log(error.response);
       if (error.response) {
         // The request was made, but the server responded with an error status code
         alert(error.response.data); // Set the server error message to the state
@@ -75,18 +77,18 @@ const Login = () => {
   return (
     <div>
       <Header />
-      <Box>계정 로그인</Box>
+      <Box>이메일 ID로 로그인</Box>
       <Input
         className={styleInput.input}
-        placeholder="이메일"
+        placeholder="이메일 ID를 입력하세요."
         valid="true"
         onChange={idChangeHandler}
       >
-        <span>ID</span>
+        ID
       </Input>
       <Input
         className={styleInput.input}
-        placeholder="비밀번호"
+        placeholder="비밀번호를 입력하세요."
         valid="true"
         type="password"
         onChange={passwordChangeHandler}
@@ -120,12 +122,21 @@ const Login = () => {
       </div>
       <Box>아직 회원이 아니신가요?</Box>
       <Button
-        className={styleButton.button}
+        className={styleButton.button_login}
         onClick={() => {
           navigate("/signup");
         }}
       >
         회원가입
+      </Button>
+      <Box>비밀번호를 잊으셨나요?</Box>
+      <Button
+        className={styleButton.button_login}
+        onClick={() => {
+          navigate("/findpw");
+        }}
+      >
+        비밀번호 찾기!
       </Button>
     </div>
   );
