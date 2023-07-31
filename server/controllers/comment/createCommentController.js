@@ -47,7 +47,9 @@ const handleCreateComment = async (req, res) => {
     await saveNotification(redirectURL, category, senderId, receiverId);
 
     const result = Promise.all([newPaper.save(), foundPaper.save()]);
-  } catch (error) {}
+  } catch (error) {
+    return res.status(500).json({ success: false });
+  }
 };
 
 module.exports = { handleCreateComment };
