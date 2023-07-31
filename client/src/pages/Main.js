@@ -18,6 +18,8 @@ const Main = () => {
   const navigate = useNavigate();
   const [noti, setNoti] = useState(false);
   const [notiArray, setNotiArray] = useState([]);
+  var referrer = document.referrer;
+  console.log(referrer);
 
   const accessToken = useSelector((state) => state.accesstoken.accessToken);
   const getNoti = async () => {
@@ -34,7 +36,6 @@ const Main = () => {
       if (res.data.notiArray.length > 0) {
         setNoti(true);
         setNotiArray(res.data.notiArray);
-        console.log(notiArray);
       }
     }
   };

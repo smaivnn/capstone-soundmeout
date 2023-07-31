@@ -121,7 +121,7 @@ const Topic = (props) => {
       const data = {
         text: postItTextValue,
         topic_id: topicId,
-        redirectPath: `topic/${topicId}`,
+        redirectURL: `topic/${topicId}`,
       };
 
       const res = await axios.post(

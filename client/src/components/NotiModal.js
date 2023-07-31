@@ -12,19 +12,22 @@ const Modal = (props) => {
   const notiArray = props.notiArray;
 
   const notiClickHandler = async (event) => {
-    const notiId = event.target.id;
+    const notiId = event.currentTarget.getAttribute("_id");
+    const rediurl = event.currentTarget.getAttribute("rediurl");
+    window.location.href = rediurl;
     try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_API_URL}/noti/read/${notiId}`,
+      const res = await axios.patch(
+        `${process.env.REACT_APP_API_URL}/notification/read/${notiId}`,
+        {},
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
         }
       );
+      console.log(res);
       if (res.data.success) {
-        alert("알림을 읽었습니다.");
-        window.location.href = "/main";
+        console.log("알림을 읽었습니다.");
       }
     } catch (err) {
       console.log(err);
@@ -48,6 +51,7 @@ const Modal = (props) => {
                 className={styleText.frame}
                 id={noti._id}
                 key={noti._id}
+                redirectURL={noti.redirectURL}
                 onClick={notiClickHandler}
               >
                 {noti.category}
