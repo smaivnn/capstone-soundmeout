@@ -11,7 +11,7 @@ const Posting = () => {
   const [title, setTitle] = useState("");
 
   const decode = jwt_decode(accessToken);
-  console.log(decode.userInfo);
+
   const titleChangeHandler = (event) => {
     setTitle(event.target.value);
   };
@@ -32,7 +32,6 @@ const Posting = () => {
         },
       }
     );
-    console.log(res.data);
 
     alert("글이 등록되었습니다.");
   };

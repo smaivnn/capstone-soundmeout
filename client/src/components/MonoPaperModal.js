@@ -27,6 +27,7 @@ const MonoPaperModal = (props) => {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
+          withCredentials: true,
         }
       );
       console.log(res);
@@ -49,6 +50,7 @@ const MonoPaperModal = (props) => {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
+          withCredentials: true,
         }
       );
       console.log(res);
