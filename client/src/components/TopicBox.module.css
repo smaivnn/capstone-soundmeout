@@ -2,10 +2,22 @@
   margin: 5px 10px;
   font-size: 15px;
   width: 100%;
-  font-family: "TheJamsil5Bold", sans-serif;
+  font-family: "YD";
   border-radius: 5px;
   border: 2px solid white;
   color: black;
-  background-color: white;
+  background-color: #ffe9fa;
+  text-align: left;
+}
+
+.frame_paper {
+  margin: 5px 5px;
+  font-size: 15px;
+  width: 95%;
+  font-family: "YD";
+  border-radius: 5px;
+  border: 2px solid white;
+  color: black;
+  background-color: #ffe9fa;
   text-align: left;
 }

@@ -84,10 +84,6 @@ router.get(
  *             schema:
  *               $ref: '#/components/schemas/responseFailed'
  */
-router.patch(
-  `/read/:notiId`,
-  verifyToken,
-  changeReadStatusController.handleReadStatus
-);
+router.patch(`/read`, verifyToken, changeReadStatusController.handleReadStatus);
 
 module.exports = router;

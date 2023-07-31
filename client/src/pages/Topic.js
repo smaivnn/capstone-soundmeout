@@ -6,24 +6,27 @@ import axios from "axios";
 import styleButton from "../components/AddPostIt.module.css";
 import PostItModal from "../components/PostItModal";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useInView } from "react-intersection-observer";
 import Header from "../components/Header";
+
 const Topic = (props) => {
   const dispatch = useDispatch();
   const login = useSelector((state) => state.login.isLoggedin);
-  const userId = useSelector((state) => state.user.loginId);
-  const [visible, setVisible] = useState("qt");
+  const _id = useSelector((state) => state.user._id);
+  const [visible, setVisible] = useState("");
   const accessToken = useSelector((state) => state.accesstoken.accessToken);
   const [paperArray, setPaperArray] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
   const [showButton, setShowButton] = useState(true);
   const { topicId } = props;
   const [showAddPostIt, setShowAddPostIt] = useState(false);
   const [postItTextValue, setPostItTextValue] = useState("");
   const [topicTitle, setTopicTitle] = useState("");
   const [endPoint, setEndPoint] = useState();
+  const [isMyTopic, setIsMyTopic] = useState(false);
   const [ref, inView] = useInView({
     threshold: 0,
   });
@@ -54,6 +57,26 @@ const Topic = (props) => {
       console.log(error);
     }
   };
+
+  const readNotification = async () => {
+    try {
+      const res = await axios.patch(
+        `${process.env.REACT_APP_API_URL}/noti/read`,
+        {
+          redirectURL: location.pathname,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      if (res.status === 200) {
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   ///useEffect - 페이지가 재렌더링될때마다 토픽,페이퍼 최신화
   useEffect(() => {
     const getTopic = async () => {
@@ -70,6 +93,9 @@ const Topic = (props) => {
           setVisible(res.data.result.visible);
           setTopicTitle(res.data.result.title);
 
+          if (res.data.result.author === _id) {
+            setIsMyTopic(true);
+          }
           if (inView) {
             getPaper();
           }
@@ -81,8 +107,12 @@ const Topic = (props) => {
         navigate("/main");
       }
     };
+
     getTopic();
     getPaper();
+    if (accessToken) {
+      readNotification();
+    }
   }, [inView, paperArray]);
 
   const deleteTopic = async () => {
@@ -158,6 +188,9 @@ const Topic = (props) => {
     setShowAddPostIt(false);
   };
   /////페이퍼 끝
+
+  //링크 복사 기능
+
   window.addEventListener("scroll", handleScroll);
   return (
     <div>
@@ -165,7 +198,7 @@ const Topic = (props) => {
         <Header
           visible={visible}
           deleteTopic={deleteTopic}
-          useTopicMenuButton="true"
+          useTopicMenuButton={isMyTopic}
           topicId={topicId}
         ></Header>
         {visible ? null : (
@@ -187,7 +220,7 @@ const Topic = (props) => {
             Add PostIt!
           </button>
         ) : null}
-        <PostItList posts={paperArray}></PostItList>
+        <PostItList posts={paperArray} mytopic={isMyTopic}></PostItList>
         {paperArray.length !== 0 ? (
           <div ref={ref}>페이퍼의 마지막입니다!</div>
         ) : null}

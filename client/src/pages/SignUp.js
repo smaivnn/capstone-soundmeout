@@ -30,9 +30,6 @@ const SignUp = () => {
     setName(event.target.value);
   };
 
-  const mailButtonHandler = () => {
-    alert("입력하신 메일로 인증번호가 전송되었습니다.");
-  };
   //Post 요청
   const handleSubmit = async () => {
     const res = await dispatch(signup(email, name, email, password));
@@ -111,18 +108,6 @@ const SignUp = () => {
         type="password"
       >
         비밀번호 확인
-      </Input>
-
-      <Button className={styleButton.button} onClick={mailButtonHandler}>
-        인증번호 받기
-      </Button>
-
-      <Input
-        className={styleInput.input}
-        placeholder="인증번호를 입력하세요."
-        valid="true"
-      >
-        인증번호
       </Input>
       <Button className={styleButton.button_modalSmall}>인증번호 확인</Button>
       <div></div>

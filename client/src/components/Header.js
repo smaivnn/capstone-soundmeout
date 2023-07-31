@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "../img/logo.png";
+import logo from "../img/logo2.png";
 import menu from "../img/icons8-menu-rounded-50.png";
 import noti from "../img/icons8-알림-30.png";
 import isNoti from "../img/icons8-알림O-30.png";
@@ -7,7 +7,7 @@ import Modal from "./MenuModal";
 import styles from "./Header.module.css";
 import TopicMenuModal from "./TopicMenumodal";
 import NotiModal from "./NotiModal";
-
+import share from "../img/icons8-공유-30.png";
 const Header = (props) => {
   const [showMenuModal, setShowMenuModal] = useState(false);
   const [showNotificationModal, setShowNotificationModal] = useState(false);
@@ -16,7 +16,10 @@ const Header = (props) => {
   const handleMenuClick = () => {
     setShowMenuModal(true);
   };
-
+  const shareClickButton = () => {
+    navigator.clipboard.writeText(window.location.href);
+    alert("클립보드에 복사되었습니다. 링크를 활용하여 공유하세요!");
+  };
   const handleNotificationClick = () => {
     setShowNotificationModal(true);
   };
@@ -75,6 +78,13 @@ const Header = (props) => {
             onClick={handleNotificationClick}
           />
         )
+      ) : props.useTopicMenuButton ? (
+        <img
+          className={styles.menuIcon}
+          src={share}
+          alt="share"
+          onClick={shareClickButton}
+        />
       ) : (
         <div className={styles.placeholder} />
       )}

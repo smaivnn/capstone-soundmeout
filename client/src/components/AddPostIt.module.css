@@ -13,6 +13,7 @@
   transform: translateY(100%);
   opacity: 0;
   animation: slideUp 0.3s ease-in-out forwards;
+  font-family: "YD";
 }
 
 @keyframes slideUp {

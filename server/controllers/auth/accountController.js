@@ -108,6 +108,7 @@ const handleUpdatePassword = async (req, res, next) => {
 
 const handleUpdatePasswordByEmail = async (req, res, next) => {
   const { newPassword } = req.body;
+
   if (!newPassword) {
     return res.status(400).json({
       success: false,

@@ -86,7 +86,6 @@ const Find = () => {
           <Text key={user._id} className={styleText.frame}>
             <div style={{ marginBottom: "20px" }}>
               <div>{user.name}</div>
-              <div>{user.loginId}</div>
 
               <div>
                 <button

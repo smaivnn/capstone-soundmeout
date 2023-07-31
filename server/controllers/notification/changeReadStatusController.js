@@ -9,22 +9,23 @@ const Notification = require("../../model/Notification");
 
 const handleReadStatus = async (req, res) => {
   const { redirectURL } = req.body;
-  const { loginId } = req.userInfo;
+  redirectURLs = redirectURL.split("/")[1] + "/" + redirectURL.split("/")[2];
+
+  const { _id } = req.userInfo;
 
   try {
     const foundNoti = await Notification.find({
-      redirectURL,
+      receiverId: _id,
+      redirectURL: redirectURLs,
       read: false,
-      receiverId: loginId,
     });
 
     if (foundNoti) {
       foundNoti.forEach((element) => {
         element.read = true;
+        element.save();
       });
-      foundNoti.save();
     }
-
     return res.status(200).json({ success: true });
   } catch (error) {
     return res.status(500).json({ success: false });

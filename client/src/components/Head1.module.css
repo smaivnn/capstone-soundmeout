@@ -1,17 +1,16 @@
 .h1 {
-  font-family: "TheJamsil5Bold", sans-serif;
+  font-family: "YD";
   font-size: 50px;
-  font-weight: bold;
   text-align: center;
   padding: 0;
   margin-bottom: 0;
   margin-top: 5%;
+  color: black;
 }
 
 .h2 {
-  font-family: "TheJamsil5Bold", sans-serif;
+  font-family: "YD";
   font-size: 30px;
-  font-weight: bold;
   text-align: center;
   padding: 0;
   margin-bottom: 0;

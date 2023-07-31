@@ -54,7 +54,7 @@ const handlePasswordMail = async (req, res, next) => {
         <body>
             <link>
             <div>비밀번호 변경을 위해 아래 버튼을 클릭해주세요</div>
-            <button><a href="http://localhost:3500/auth/find-password/callback?email=${encodedEmail}&code=${code}">비밀번호 변경</a></button>
+            <button><a href="http://localhost:3000/auth/find-password/callback?email=${encodedEmail}&code=${code}">비밀번호 변경</a></button>
         </body>
         </html>`,
     };

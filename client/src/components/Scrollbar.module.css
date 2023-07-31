@@ -28,10 +28,17 @@
 }
 
 .scrollbar_content {
+  height: 30vh;
   display: grid;
+  overflow-y: hidden;
+  border: 2px solid black;
+  margin-left: 2%;
+  margin-right: 2%;
+  border-radius: 10px;
+  overflow: hidden;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: 20px;
-  padding: 20px;
+  grid-gap: 10px;
+  justify-content: center;
 }
 .scrollbar_bigger {
   height: 40vh;

@@ -26,9 +26,6 @@ const Modal = (props) => {
         }
       );
       console.log(res);
-      if (res.data.success) {
-        console.log("알림을 읽었습니다.");
-      }
     } catch (err) {
       console.log(err);
       alert("알림을 읽는데 실패했습니다.");
@@ -54,8 +51,7 @@ const Modal = (props) => {
                 redirectURL={noti.redirectURL}
                 onClick={notiClickHandler}
               >
-                {noti.category}
-                {noti._id}
+                알림이 있습니다{noti.category}
               </Text>
             ))}
           </Scrollbar>

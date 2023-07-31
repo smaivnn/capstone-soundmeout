@@ -90,10 +90,10 @@ const Home = () => {
         </div>
       </Scrollbar>
       <Head1 className={styleHead.h1}>내가 작성한 페이퍼</Head1>
-      <Scrollbar className={styleScrollbar.scrollbar_container}>
+      <Scrollbar className={styleScrollbar.scrollbar_content}>
         {paperArray.map((paper) => (
           <TopicBox
-            className={styleTopicBox.frame}
+            className={styleTopicBox.frame_paper}
             key={paper._id}
             _id={paper._id}
             title={paper.text}

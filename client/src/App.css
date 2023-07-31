@@ -2,6 +2,12 @@
   margin: 0px auto;
   width: 525px;
   height: 100%;
-  border: 1px solid black;
-  background-color: #ffe9fa;
+  background-color: white;
+  font-family: "YD";
+}
+
+@font-face {
+  font-family: "YD";
+  font-weight: 50;
+  src: url("./fonts/Yeongdeok\ Sea.ttf") format("truetype");
 }

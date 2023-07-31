@@ -27,7 +27,6 @@ export const signup = (id, name, email, password) => async (dispatch) => {
       `${process.env.REACT_APP_API_URL}/auth/signup`,
       data
     );
-    console.log(res);
 
     dispatch(signupSuccess());
     return res.data;

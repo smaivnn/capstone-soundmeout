@@ -1,11 +1,12 @@
 // Action Types
-const SET_USER = 'user/SET_USER';
+const SET_USER = "user/SET_USER";
 
 // Initial State
 const initialState = {
-  email: '',
-  loginId: '',
-  name: '',
+  email: "",
+  loginId: "",
+  name: "",
+  _id: "",
 };
 
 // Reducer
@@ -17,6 +18,7 @@ export default function reducer(state = initialState, action = {}) {
         email: action.payload.email,
         loginId: action.payload.loginId,
         name: action.payload.name,
+        _id: action.payload._id,
       };
     default:
       return state;
@@ -24,13 +26,14 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 // Action Creators
-export function setUser(email, loginId, name) {
+export function setUser(email, loginId, name, _id) {
   return {
     type: SET_USER,
     payload: {
       email,
       loginId,
       name,
+      _id,
     },
   };
 }

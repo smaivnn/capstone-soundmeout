@@ -1,7 +1,7 @@
 .frame {
   margin: 5%;
   font-size: 20px;
-  font-family: "TheJamsil5Bold", sans-serif;
+  font-family: "YD";
   border-radius: 5px;
   border: 2px solid WHITE;
   color: black;
@@ -9,14 +9,25 @@
   text-align: right;
   padding: 20px 10px;
 }
-
+.frame_noti {
+  margin: 5%;
+  font-size: 20px;
+  font-family: "YD";
+  border-radius: 5px;
+  border: 2px solid WHITE;
+  color: black;
+  background-color: #ffe9fa;
+  text-align: right;
+  padding: 20px 10px;
+  display: inline;
+}
 .frame_profile {
   margin-left: 5%;
   margin-right: 5%;
   margin-bottom: 5%;
   margin-top: 5%;
   font-size: 20px;
-  font-family: "TheJamsil5Bold", sans-serif;
+  font-family: "YD";
   border-radius: 5px;
   border: 2px solid WHITE;
   color: black;
@@ -29,7 +40,7 @@
 .frame_currentTopic {
   margin: 10px;
   font-size: 20px;
-  font-family: "TheJamsil5Bold", sans-serif;
+  font-family: "YD";
   border-radius: 5px;
   border: 2px solid black;
   color: black;
@@ -42,7 +53,7 @@
 .frame_inModal {
   margin: 5px;
   font-size: 20px;
-  font-family: "TheJamsil5Bold", sans-serif;
+  font-family: "YD";
 
   color: black;
   text-align: center;

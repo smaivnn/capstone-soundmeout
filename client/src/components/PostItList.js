@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import MonoPaperModal from "./MonoPaperModal";
-const PostItList = ({ posts }) => {
+const PostItList = ({ posts, mytopic }) => {
   const [colors, setColors] = useState({});
   const [angles, setAngles] = useState({});
   const [showPaperModal, setShowPaperModal] = useState(false);
@@ -9,6 +9,8 @@ const PostItList = ({ posts }) => {
   const [modalText, setModalText] = useState("");
   const [paperid, setPaperid] = useState("");
   const [visible, setVisible] = useState("");
+  const [author, setAuthor] = useState("");
+
   const PostIt = styled.div`
     background-color: ${({ color }) => color};
     transform: rotate(${({ angle }) => angle}deg);
@@ -64,11 +66,13 @@ const PostItList = ({ posts }) => {
     const text = event.currentTarget.textContent;
     const id = event.currentTarget.getAttribute("paperid");
     const visible = event.currentTarget.getAttribute("isvisible");
+    const author = event.currentTarget.getAttribute("author");
 
     setModalColor(color);
     setModalText(text);
     setPaperid(id);
     setVisible(visible);
+    setAuthor(author);
   };
 
   return (
@@ -82,6 +86,8 @@ const PostItList = ({ posts }) => {
             onClick={paperClickHandler}
             paperid={posts._id}
             isvisible="true"
+            mytopic={mytopic}
+            author={posts.author}
           >
             {posts.text}
           </PostIt>
@@ -93,6 +99,7 @@ const PostItList = ({ posts }) => {
             onClick={paperClickHandler}
             paperid={posts._id}
             isvisible="false"
+            author={posts.author}
           >
             {posts.text}
           </InvisiblePostIt>
@@ -106,6 +113,8 @@ const PostItList = ({ posts }) => {
           text={modalText}
           paperid={paperid}
           isvisible={visible}
+          mytopic={mytopic}
+          author={author}
         ></MonoPaperModal>
       ) : null}
     </div>

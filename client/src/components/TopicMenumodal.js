@@ -12,9 +12,13 @@ import styleHead from "./Head1.module.css";
 const TopicMenuModal = (props) => {
   const accessToken = useSelector((state) => state.accesstoken.accessToken);
   const [showUpdate, setShowUpdate] = useState(false);
+  const [showDeleteButton, setShowDeleteButton] = useState(false);
+
   const [checked, setChecked] = useState(props.visible ? false : true);
   const navigate = useNavigate();
-
+  const setDeleteButton = () => {
+    setShowDeleteButton(!showDeleteButton);
+  };
   const setVisibleTopic = async () => {
     try {
       const data = {
@@ -84,11 +88,26 @@ const TopicMenuModal = (props) => {
             </div>
             <Button
               className={styleButton.button_modal}
-              onClick={props.deleteTopic}
+              onClick={setDeleteButton}
             >
               토픽 삭제
             </Button>
           </div>
+          {showDeleteButton && (
+            <div>
+              <Head1 className={styleHead.h2}>
+                토픽을 삭제하시겠습니까? <br />
+                되돌릴 수 없습니다.
+              </Head1>
+
+              <Button
+                className={styleButton.button_modal}
+                onClick={props.deleteTopic}
+              >
+                삭제
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </div>

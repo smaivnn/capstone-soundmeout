@@ -18,19 +18,14 @@ const Main = () => {
   const navigate = useNavigate();
   const [noti, setNoti] = useState(false);
   const [notiArray, setNotiArray] = useState([]);
-  var referrer = document.referrer;
-  console.log(referrer);
 
   const accessToken = useSelector((state) => state.accesstoken.accessToken);
   const getNoti = async () => {
-    const res = await axios.get(
-      `${process.env.REACT_APP_API_URL}/notification/check`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/noti/check`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
 
     if (res.data.success) {
       if (res.data.notiArray.length > 0) {

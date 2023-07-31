@@ -9,7 +9,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 20px;
-  font-family: "TheJamsil5Bold", sans-serif;
+  font-family: "YD";
   color: white;
 }
 
@@ -25,7 +25,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 20px;
-  font-family: "TheJamsil5Bold", sans-serif;
+  font-family: "YD";
   color: white;
 }
 
@@ -40,7 +40,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 20px;
-  font-family: "TheJamsil5Bold", sans-serif;
+  font-family: "YD";
   color: white;
   cursor: pointer;
 }
@@ -62,7 +62,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 20px;
-  font-family: "TheJamsil5Bold", sans-serif;
+  font-family: "YD";
   color: white;
 }
 
@@ -76,7 +76,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 20px;
-  font-family: "TheJamsil5Bold", sans-serif;
+  font-family: "YD";
   color: #202020;
 }
 
@@ -88,6 +88,6 @@
   position: relative;
   margin-left: 120px;
   font-size: 20px;
-  font-family: "TheJamsil5Bold", sans-serif;
+  font-family: "YD";
   color: #202020;
 }

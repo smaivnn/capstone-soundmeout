@@ -34,7 +34,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/auth", require("./routes/auth"));
 app.use("/topic", require("./routes/topic"));
 app.use("/paper", require("./routes/paper"));
-app.use("/notification", require("./routes/noti"));
+app.use("/noti", require("./routes/noti"));
 app.use("/follow", require("./routes/follow"));
 app.use("/user", require("./routes/user"));
 
