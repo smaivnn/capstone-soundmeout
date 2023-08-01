@@ -40,7 +40,7 @@ const Login = () => {
       ) {
         dispatch(setAccessToken(res.data.accessToken));
         const decode = jwt_decode(res.data.accessToken);
-        console.log(decode.userInfo);
+
         /* 디코딩된 액세스토큰의 정보 저장*/
         dispatch(
           setUser(
