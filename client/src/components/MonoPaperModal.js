@@ -13,7 +13,6 @@ const MonoPaperModal = (props) => {
   const accessToken = useSelector((state) => state.accesstoken.accessToken);
   const _id = useSelector((state) => state.user._id);
   const isMyPaper = props.author === _id;
-  console.log(props.author, _id, isMyPaper);
 
   const location = useLocation();
   const redirectPath =

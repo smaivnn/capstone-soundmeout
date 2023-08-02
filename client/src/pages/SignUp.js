@@ -109,8 +109,6 @@ const SignUp = () => {
       >
         비밀번호 확인
       </Input>
-      <Button className={styleButton.button_modalSmall}>인증번호 확인</Button>
-      <div></div>
       <Button onClick={handleSubmit} className={styleButton.button}>
         회원가입
       </Button>
