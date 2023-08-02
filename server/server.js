@@ -38,7 +38,7 @@ app.use("/noti", require("./routes/noti"));
 app.use("/follow", require("./routes/follow"));
 app.use("/user", require("./routes/user"));
 app.use("/", (req, res) => {
-  conosol.log("ip", requestIp.getClientIp(req));
+  console.log("ip", requestIp.getClientIp(req));
   return res.status(200).json({ message: "Welcome to SoundMeOut API!" });
 });
 
