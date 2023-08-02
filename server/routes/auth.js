@@ -328,6 +328,7 @@ router.post(
 
 router.get(
   "/find-password/callback",
+  verifyJwtToken.verifyToken,
   mailCallbackController.handlePasswordMailCallback
 );
 
@@ -335,8 +336,8 @@ router.get(
  * @swagger
  * /auth/find-password:
  *   post:
- *     summary: 비밀번호 변경
- *     description: header로 access_token과 body로 login_id, old_password, new_password를 받아 검증 후 비밀번호를 변경한다.
+ *     summary: 비밀번호 찾기
+ *     description: header로 access_token과 new_password를 받아 비밀번호를 변경한다.
  *     tags:
  *       - Auth
  *     parameters:
@@ -347,26 +348,16 @@ router.get(
  *         schema:
  *           type: string
  *     requestBody:
- *        description: login_id, old_password, new_password를 넣어주세요.
+ *        description: nnew_password를 넣어주세요.
  *        required: true
  *        content:
  *          application/json:
  *            schema:
  *             type: object
  *             properties:
- *               login_id:
- *                 type: integer
- *                 example: 1231
- *               old_password:
- *                 type: string
- *                 example: qwer1234
  *               new_password:
  *                 type: string
  *                 example: asdf1234
- *             required:
- *               - login_id
- *               - old_password
- *               - new_password
  *     responses:
  *       200:
  *         description: Ok
@@ -383,7 +374,7 @@ router.get(
  *                   example: true
  *                 message:
  *                   type: string
- *                   example: 비밀번호 변경 성공
+ *                   example: 메일 전송 완료
  *       204:
  *         description: No Content
  *         content:

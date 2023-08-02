@@ -4,7 +4,6 @@ const { IssueToken } = require("./issueToken");
 
 const handlePasswordMailCallback = async (req, res, next) => {
   const { email, code } = req.query;
-  console.log(email, code);
   if (!email || !code) {
     return res.status(400).json({
       success: false,
